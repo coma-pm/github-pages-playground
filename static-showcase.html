@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Static Showcase | GitHub Pages Playground</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6HSYY8Z3X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+    gtag("config", "G-P6HSYY8Z3X");
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08111c;
+      --bg-strong: #040a11;
+      --panel: rgba(9, 22, 34, 0.7);
+      --panel-strong: rgba(14, 31, 46, 0.92);
+      --line: rgba(146, 199, 227, 0.16);
+      --text: #eef5ff;
+      --muted: #91a8bc;
+      --accent: #58d3b3;
+      --accent-2: #77b8ff;
+      --accent-3: #ffd06f;
+      --danger: #ff7e7e;
+      --shadow: 0 32px 90px rgba(0, 0, 0, 0.42);
+      --max-width: 1180px;
+      --density: 44;
+      --speed: 0.7;
+      --glow: 0.68;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Avenir Next", "Hiragino Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 18%, rgba(83, 153, 255, 0.18), transparent 26%),
+        radial-gradient(circle at 80% 10%, rgba(88, 211, 179, 0.15), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(255, 208, 111, 0.09), transparent 22%),
+        linear-gradient(180deg, #08111c 0%, #091420 34%, #050b12 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(140, 193, 221, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(140, 193, 221, 0.045) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+      opacity: 0.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    canvas#scene {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: calc(0.42 + (var(--glow) * 0.2));
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: min(var(--max-width), calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 96px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0 28px;
+    }
+
+    .back-link,
+    .nav-pill,
+    .mode-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(8, 18, 28, 0.55);
+      text-decoration: none;
+      backdrop-filter: blur(20px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 26px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-copy,
+    .hero-panel,
+    .section-card,
+    .feature-card,
+    .chart-card,
+    .story-card,
+    .lab-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(10, 23, 35, 0.82), rgba(7, 16, 24, 0.84));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .hero-copy {
+      padding: 36px;
+      min-height: 620px;
+      display: grid;
+      align-content: space-between;
+      gap: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--accent);
+      font-size: 0.84rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(3.2rem, 8vw, 7.6rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      max-width: 8ch;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 58ch;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+
+    .hero-actions,
+    .stats-row,
+    .nav-grid,
+    .control-grid,
+    .feature-grid,
+    .story-grid,
+    .lab-grid,
+    .footer-row {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero-actions {
+      grid-template-columns: repeat(auto-fit, minmax(180px, max-content));
+      align-items: center;
+    }
+
+    .button-primary,
+    .button-secondary,
+    .toggle-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font: inherit;
+      font-weight: 700;
+      color: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, rgba(88, 211, 179, 0.95), rgba(119, 184, 255, 0.92));
+      color: #041018;
+      box-shadow: 0 14px 40px rgba(88, 211, 179, 0.2);
+    }
+
+    .button-secondary,
+    .toggle-chip {
+      background: rgba(11, 25, 38, 0.68);
+      border-color: var(--line);
+    }
+
+    .button-primary:hover,
+    .button-secondary:hover,
+    .toggle-chip:hover,
+    .mode-button:hover,
+    .nav-pill:hover,
+    .back-link:hover {
+      transform: translateY(-1px);
+    }
+
+    .stats-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stat {
+      padding: 18px;
+      border: 1px solid rgba(150, 199, 227, 0.12);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .stat-label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .stat-value {
+      display: block;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .stat-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-panel {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .panel-topline,
+    .section-topline,
+    .mini-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(88, 211, 179, 0.6);
+      animation: pulse 1.8s infinite;
+    }
+
+    .panel-visual {
+      min-height: 260px;
+      padding: 18px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(119, 184, 255, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(13, 31, 49, 0.9), rgba(7, 17, 27, 0.94));
+      border: 1px solid rgba(150, 199, 227, 0.12);
+    }
+
+    .orbital {
+      position: relative;
+      min-height: 224px;
+      isolation: isolate;
+    }
+
+    .ring,
+    .core,
+    .satellite {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+    }
+
+    .core {
+      width: 92px;
+      height: 92px;
+      background:
+        radial-gradient(circle at 35% 35%, #ffffff, rgba(119, 184, 255, 0.82) 26%, rgba(88, 211, 179, 0.55) 58%, rgba(88, 211, 179, 0.04) 76%);
+      filter: blur(0.2px);
+      box-shadow: 0 0 80px rgba(119, 184, 255, 0.44);
+    }
+
+    .ring {
+      border: 1px solid rgba(119, 184, 255, 0.24);
+      animation: spin linear infinite;
+    }
+
+    .ring.one {
+      width: 156px;
+      height: 156px;
+      animation-duration: 24s;
+    }
+
+    .ring.two {
+      width: 224px;
+      height: 224px;
+      animation-duration: 32s;
+      animation-direction: reverse;
+    }
+
+    .ring.three {
+      width: 288px;
+      height: 288px;
+      animation-duration: 42s;
+    }
+
+    .satellite {
+      width: 14px;
+      height: 14px;
+      background: var(--accent-3);
+      box-shadow: 0 0 26px rgba(255, 208, 111, 0.8);
+    }
+
+    .satellite.a {
+      left: calc(50% + 78px);
+      top: calc(50% - 2px);
+    }
+
+    .satellite.b {
+      left: calc(50% - 112px);
+      top: calc(50% + 8px);
+      background: var(--accent);
+      box-shadow: 0 0 24px rgba(88, 211, 179, 0.72);
+    }
+
+    .satellite.c {
+      left: calc(50% + 4px);
+      top: calc(50% - 144px);
+      background: var(--accent-2);
+      box-shadow: 0 0 24px rgba(119, 184, 255, 0.72);
+    }
+
+    .mini-terminal {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(5, 11, 18, 0.78);
+      border: 1px solid rgba(150, 199, 227, 0.14);
+      font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+      font-size: 0.92rem;
+    }
+
+    .terminal-line {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .terminal-line strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    section {
+      margin-top: 24px;
+    }
+
+    .section-card {
+      padding: 28px;
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2,
+    .story-card h3,
+    .feature-card h3,
+    .lab-card h3 {
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+    }
+
+    .section-heading p,
+    .feature-card p,
+    .story-card p,
+    .lab-card p,
+    .control-note,
+    .footer-note {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .nav-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .nav-pill {
+      justify-content: space-between;
+      min-height: 68px;
+      padding: 16px 18px;
+    }
+
+    .nav-pill span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .control-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      align-items: start;
+    }
+
+    .chart-card,
+    .lab-card {
+      padding: 24px;
+    }
+
+    .control-stack,
+    .sliders,
+    .chip-row,
+    .legend-list,
+    .story-meta,
+    .lab-output {
+      display: grid;
+      gap: 16px;
+    }
+
+    .sliders {
+      margin-top: 20px;
+    }
+
+    .slider-group {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(150, 199, 227, 0.1);
+    }
+
+    .slider-row,
+    .chip-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .chip-row {
+      justify-content: flex-start;
+    }
+
+    .toggle-chip[aria-pressed="true"] {
+      border-color: rgba(88, 211, 179, 0.48);
+      background: rgba(88, 211, 179, 0.13);
+      color: #f3fffb;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 10px;
+      align-items: end;
+      min-height: 220px;
+      margin-top: 16px;
+    }
+
+    .signal-bar {
+      border-radius: 18px 18px 8px 8px;
+      background: linear-gradient(180deg, rgba(119, 184, 255, 0.95), rgba(88, 211, 179, 0.28));
+      box-shadow: inset 0 -18px 24px rgba(0, 0, 0, 0.18);
+      transition: height 240ms ease;
+    }
+
+    .legend-list {
+      margin-top: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .legend-item {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(150, 199, 227, 0.1);
+    }
+
+    .legend-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.1rem;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .feature-card {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(119, 184, 255, 0.22), rgba(88, 211, 179, 0.14));
+      color: var(--accent-3);
+      font-size: 1.5rem;
+    }
+
+    .story-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .story-card {
+      padding: 26px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .story-stage {
+      position: relative;
+      min-height: 300px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 35% 24%, rgba(119, 184, 255, 0.18), transparent 28%),
+        linear-gradient(180deg, rgba(17, 37, 55, 0.95), rgba(8, 18, 28, 0.95));
+      border: 1px solid rgba(150, 199, 227, 0.12);
+    }
+
+    .mesh {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 22%, rgba(255, 208, 111, 0.18), transparent 12%),
+        radial-gradient(circle at 72% 42%, rgba(88, 211, 179, 0.16), transparent 14%),
+        radial-gradient(circle at 50% 72%, rgba(119, 184, 255, 0.15), transparent 16%);
+      filter: blur(10px);
+      opacity: calc(0.62 + (var(--glow) * 0.38));
+      transition: opacity 200ms ease;
+    }
+
+    .beam {
+      position: absolute;
+      inset: auto auto 16% 12%;
+      width: 76%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(119, 184, 255, 0.6), transparent);
+      box-shadow: 0 0 28px rgba(119, 184, 255, 0.45);
+      animation: scan 6s linear infinite;
+    }
+
+    .story-map {
+      position: absolute;
+      inset: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(150, 199, 227, 0.1);
+      overflow: hidden;
+    }
+
+    .story-map svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .story-meta {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .meta-box {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(150, 199, 227, 0.1);
+    }
+
+    .meta-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.4rem;
+    }
+
+    .lab-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .toggle-cluster {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .lab-output {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(5, 11, 18, 0.76);
+      border: 1px solid rgba(150, 199, 227, 0.14);
+      min-height: 100%;
+      align-content: start;
+    }
+
+    .output-badge {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(88, 211, 179, 0.12);
+      color: #eafff8;
+      font-size: 0.9rem;
+    }
+
+    .output-text {
+      margin: 0;
+      font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+      line-height: 1.6;
+    }
+
+    .progress-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .progress-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .progress-bar {
+      position: relative;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 220ms ease;
+    }
+
+    .footer-row {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      margin-top: 28px;
+      padding: 24px 0 0;
+      border-top: 1px solid rgba(146, 199, 227, 0.1);
+    }
+
+    .clock {
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes spin {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(88, 211, 179, 0.55);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(88, 211, 179, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(88, 211, 179, 0);
+      }
+    }
+
+    @keyframes scan {
+      0% {
+        transform: translateY(-18px);
+      }
+
+      50% {
+        transform: translateY(18px);
+      }
+
+      100% {
+        transform: translateY(-18px);
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .control-grid,
+      .story-grid,
+      .lab-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: auto;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(var(--max-width), calc(100% - 20px));
+        padding-bottom: 72px;
+      }
+
+      .topbar,
+      .hero-actions,
+      .footer-row,
+      .stats-row,
+      .nav-grid,
+      .feature-grid,
+      .story-meta,
+      .legend-list {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .hero-panel,
+      .section-card,
+      .story-card,
+      .chart-card,
+      .lab-card {
+        padding: 20px;
+        border-radius: 24px;
+      }
+
+      .topbar {
+        justify-items: start;
+      }
+
+      .panel-visual {
+        min-height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <main>
+    <div class="topbar reveal">
+      <a class="back-link" href="./index.html">Back to Index</a>
+      <div class="topbar-nav">
+        <a class="nav-pill" href="#controls">Tune It <span>Local controls only</span></a>
+        <a class="nav-pill" href="#story">Read the Map <span>SVG + motion</span></a>
+        <button class="mode-button" type="button" id="mode-button">Shift Atmosphere</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <article class="hero-copy reveal">
+        <div>
+          <p class="eyebrow">Static Web Stress Test</p>
+          <h1>How rich can one HTML page get?</h1>
+          <p class="lead">
+            No server, no build step, no framework runtime. This page is a deliberately overbuilt static artifact:
+            animated background rendering, stateful controls, SVG scene composition, motion, generated copy, and a
+            dashboard that reshapes itself in the browser.
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <a class="button-primary" href="#controls">Open the Control Deck</a>
+          <a class="button-secondary" href="#lab">Compose a Scenario</a>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-label">Transport</span>
+            <span class="stat-value">0 requests</span>
+            <p class="stat-note">After first load, all interaction stays client-side.</p>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Surface</span>
+            <span class="stat-value" id="surface-value">Canvas + SVG</span>
+            <p class="stat-note">Two rendering layers, one static document.</p>
+          </div>
+          <div class="stat">
+            <span class="stat-label">State</span>
+            <span class="stat-value" id="state-value">Reactive</span>
+            <p class="stat-note">Sliders, toggles, counters, and generated text.</p>
+          </div>
+        </div>
+      </article>
+
+      <aside class="hero-panel reveal">
+        <div class="panel-topline">
+          <span>Signal Core</span>
+          <span class="mini-label"><span class="live-dot"></span> Live</span>
+        </div>
+
+        <div class="panel-visual">
+          <div class="orbital">
+            <div class="ring one"></div>
+            <div class="ring two"></div>
+            <div class="ring three"></div>
+            <div class="core"></div>
+            <div class="satellite a"></div>
+            <div class="satellite b"></div>
+            <div class="satellite c"></div>
+          </div>
+        </div>
+
+        <div class="mini-terminal" aria-live="polite">
+          <div class="terminal-line"><strong>mode</strong><span id="terminal-mode">cinematic / balanced</span></div>
+          <div class="terminal-line"><strong>density</strong><span id="terminal-density">44 nodes</span></div>
+          <div class="terminal-line"><strong>response</strong><span id="terminal-response">adaptive motion + staged reveal</span></div>
+          <div class="terminal-line"><strong>clock</strong><span id="clock-inline">--:--:--</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section-card reveal">
+      <div class="section-heading">
+        <div class="section-topline">
+          <span>Capabilities</span>
+          <span>Single file, high density</span>
+        </div>
+        <h2>Static does not mean flat</h2>
+        <p>
+          A plain GitHub Pages deployment can still deliver layered motion, dashboard-style composition,
+          reactive controls, local persistence, and polished visual rhythm if the page is authored deliberately.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">01</div>
+          <h3>Scene Rendering</h3>
+          <p>Canvas particles and connective lines create depth without requiring any backend or WebGL setup.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">02</div>
+          <h3>Reactive UI</h3>
+          <p>Controls update visuals, metrics, generated copy, and bars in real time with plain browser APIs.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">03</div>
+          <h3>Composed Narrative</h3>
+          <p>SVG paths, timed reveals, and staged sections make the page read more like an experience than a document.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-card reveal" id="controls">
+      <div class="section-heading">
+        <div class="section-topline">
+          <span>Control Deck</span>
+          <span>Inputs mutate the page</span>
+        </div>
+        <h2>Push the interface harder</h2>
+        <p>
+          The controls below change the density of the background field, motion speed, glow intensity, and the
+          dashboard profile. Everything stays inside a static document.
+        </p>
+      </div>
+
+      <div class="control-grid">
+        <article class="chart-card">
+          <div class="panel-topline">
+            <span>Signal Histogram</span>
+            <span id="histogram-label">Profile: balanced</span>
+          </div>
+          <div class="signal-grid" id="signal-grid" aria-hidden="true"></div>
+          <div class="legend-list">
+            <div class="legend-item">
+              <strong id="legend-density">44</strong>
+              Particle density
+            </div>
+            <div class="legend-item">
+              <strong id="legend-speed">0.70</strong>
+              Motion speed
+            </div>
+            <div class="legend-item">
+              <strong id="legend-glow">0.68</strong>
+              Atmosphere glow
+            </div>
+          </div>
+        </article>
+
+        <article class="lab-card">
+          <div class="panel-topline">
+            <span>Operator Inputs</span>
+            <span>Local state</span>
+          </div>
+
+          <div class="control-stack">
+            <div class="sliders">
+              <label class="slider-group" for="density-range">
+                <div class="slider-row">
+                  <span>Particle Density</span>
+                  <strong id="density-output">44</strong>
+                </div>
+                <input id="density-range" type="range" min="18" max="88" value="44" />
+              </label>
+
+              <label class="slider-group" for="speed-range">
+                <div class="slider-row">
+                  <span>Motion Speed</span>
+                  <strong id="speed-output">0.70</strong>
+                </div>
+                <input id="speed-range" type="range" min="20" max="140" value="70" />
+              </label>
+
+              <label class="slider-group" for="glow-range">
+                <div class="slider-row">
+                  <span>Glow Intensity</span>
+                  <strong id="glow-output">0.68</strong>
+                </div>
+                <input id="glow-range" type="range" min="20" max="100" value="68" />
+              </label>
+            </div>
+
+            <div>
+              <div class="panel-topline">
+                <span>Atmosphere Profile</span>
+                <span>Preset curves</span>
+              </div>
+              <div class="chip-row" id="profile-buttons">
+                <button class="toggle-chip" type="button" data-profile="balanced" aria-pressed="true">Balanced</button>
+                <button class="toggle-chip" type="button" data-profile="surge" aria-pressed="false">Surge</button>
+                <button class="toggle-chip" type="button" data-profile="pulse" aria-pressed="false">Pulse</button>
+                <button class="toggle-chip" type="button" data-profile="night" aria-pressed="false">Night</button>
+              </div>
+            </div>
+
+            <p class="control-note">
+              This is the practical ceiling test for static hosting: substantial presentation logic, motion, and state,
+              while still shipping as a simple HTML file.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-card reveal" id="story">
+      <div class="section-heading">
+        <div class="section-topline">
+          <span>Story Layer</span>
+          <span>SVG + CSS motion</span>
+        </div>
+        <h2>Vector composition can carry a whole scene</h2>
+        <p>
+          The map below is just inline SVG and CSS, but it still reads like a spatial control interface rather than a
+          flat illustration.
+        </p>
+      </div>
+
+      <div class="story-grid">
+        <article class="story-card">
+          <div class="story-stage">
+            <div class="mesh"></div>
+            <div class="beam"></div>
+            <div class="story-map">
+              <svg viewBox="0 0 700 420" role="img" aria-label="Abstract signal route map">
+                <defs>
+                  <linearGradient id="routeA" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#77b8ff" />
+                    <stop offset="100%" stop-color="#58d3b3" />
+                  </linearGradient>
+                  <linearGradient id="routeB" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ffd06f" />
+                    <stop offset="100%" stop-color="#77b8ff" />
+                  </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="700" height="420" fill="transparent" />
+                <g opacity="0.26" stroke="#8ec4dd" stroke-width="1">
+                  <path d="M40 80 H660" />
+                  <path d="M40 160 H660" />
+                  <path d="M40 240 H660" />
+                  <path d="M40 320 H660" />
+                  <path d="M120 40 V380" />
+                  <path d="M260 40 V380" />
+                  <path d="M400 40 V380" />
+                  <path d="M540 40 V380" />
+                </g>
+                <path d="M84 306 C164 182 246 128 344 146 C444 164 528 256 614 206" fill="none" stroke="url(#routeA)" stroke-width="6" stroke-linecap="round" />
+                <path d="M102 118 C176 166 256 258 344 244 C434 230 526 118 612 134" fill="none" stroke="url(#routeB)" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 10" />
+                <g fill="#eef5ff">
+                  <circle cx="84" cy="306" r="8" />
+                  <circle cx="344" cy="146" r="10" />
+                  <circle cx="614" cy="206" r="8" />
+                  <circle cx="102" cy="118" r="6" />
+                  <circle cx="612" cy="134" r="6" />
+                </g>
+                <g fill="#91a8bc" font-family="IBM Plex Mono, monospace" font-size="16">
+                  <text x="64" y="338">Origin</text>
+                  <text x="316" y="124">Relay</text>
+                  <text x="576" y="194">Output</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="story-meta">
+            <div class="meta-box">
+              <strong>SVG</strong>
+              Resolution independent and easy to art direct inline.
+            </div>
+            <div class="meta-box">
+              <strong>CSS</strong>
+              Motion, glow, scan lines, and depth cues layer on top cleanly.
+            </div>
+            <div class="meta-box">
+              <strong>HTML</strong>
+              The narrative framing and data labels stay accessible and indexable.
+            </div>
+          </div>
+        </article>
+
+        <article class="story-card">
+          <div class="panel-topline">
+            <span>Readout</span>
+            <span>What this proves</span>
+          </div>
+          <h3>Practical static limits</h3>
+          <p>
+            Static hosting breaks when you need protected data, coordinated multi-user state, or server-grade compute.
+            It does not break when you want dramatic visuals, responsive dashboards, narrative transitions, or rich local interaction.
+          </p>
+          <p>
+            In other words, the ceiling is higher than “simple brochure site.” The real constraints are persistence,
+            secrecy, and compute ownership, not polish.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-card reveal" id="lab">
+      <div class="section-heading">
+        <div class="section-topline">
+          <span>Scenario Lab</span>
+          <span>Generated from toggles</span>
+        </div>
+        <h2>Even the narrative can be dynamic</h2>
+        <p>
+          These toggles recompose the copy and capability bars below. It is still static deployment, just client-side
+          state and presentation logic.
+        </p>
+      </div>
+
+      <div class="lab-grid">
+        <article class="lab-card">
+          <div class="panel-topline">
+            <span>Scenario Flags</span>
+            <span>3 local toggles</span>
+          </div>
+          <div class="toggle-cluster">
+            <button class="toggle-chip" type="button" data-flag="immersive" aria-pressed="true">Immersive Motion</button>
+            <button class="toggle-chip" type="button" data-flag="data" aria-pressed="true">Dense Telemetry</button>
+            <button class="toggle-chip" type="button" data-flag="editorial" aria-pressed="false">Editorial Tone</button>
+          </div>
+          <p class="control-note">
+            The result area updates the descriptive copy, confidence badge, and a small capability model. No network,
+            no template engine, no server function.
+          </p>
+        </article>
+
+        <article class="lab-output">
+          <span class="output-badge" id="scenario-badge">Profile confidence: 84%</span>
+          <p class="output-text" id="scenario-text">
+            This static page behaves like a cinematic control room: animated, data-rich, and surprisingly reactive for a
+            single hosted document.
+          </p>
+          <div class="progress-list">
+            <div class="progress-row">
+              <div class="slider-row">
+                <span>Visual Density</span>
+                <strong id="progress-density-label">82%</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" id="progress-density"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="slider-row">
+                <span>Interaction Depth</span>
+                <strong id="progress-depth-label">78%</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" id="progress-depth"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="slider-row">
+                <span>Static Suitability</span>
+                <strong id="progress-suitability-label">91%</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" id="progress-suitability"></div></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="footer-row reveal">
+      <p class="footer-note">
+        If you want to push further after this, the next ceiling is usually WebAssembly, offline storage, and external APIs.
+      </p>
+      <div class="clock" id="footer-clock">--:--:--</div>
+    </div>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "github-pages-playground.static-showcase.state";
+    const canvas = document.getElementById("scene");
+    const context = canvas.getContext("2d");
+    const densityRange = document.getElementById("density-range");
+    const speedRange = document.getElementById("speed-range");
+    const glowRange = document.getElementById("glow-range");
+    const profileButtons = [...document.querySelectorAll("#profile-buttons .toggle-chip")];
+    const flagButtons = [...document.querySelectorAll("[data-flag]")];
+    const signalGrid = document.getElementById("signal-grid");
+    const modeButton = document.getElementById("mode-button");
+    const revealTargets = [...document.querySelectorAll(".reveal")];
+
+    const state = {
+      density: 44,
+      speed: 0.7,
+      glow: 0.68,
+      profile: "balanced",
+      flags: {
+        immersive: true,
+        data: true,
+        editorial: false
+      },
+      cinematic: true
+    };
+
+    const profileShapes = {
+      balanced: [42, 50, 58, 66, 62, 74, 78, 70, 64, 56, 48, 44],
+      surge: [28, 34, 46, 58, 76, 92, 86, 72, 54, 46, 38, 32],
+      pulse: [24, 62, 28, 72, 34, 78, 40, 82, 48, 68, 44, 76],
+      night: [20, 24, 28, 36, 42, 48, 56, 52, 46, 34, 26, 22]
+    };
+
+    const particles = [];
+    let width = 0;
+    let height = 0;
+    let animationFrame = 0;
+
+    for (let i = 0; i < 12; i += 1) {
+      const bar = document.createElement("div");
+      bar.className = "signal-bar";
+      signalGrid.append(bar);
+    }
+
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      syncParticles();
+    }
+
+    function randomBetween(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createParticle() {
+      return {
+        x: randomBetween(0, width),
+        y: randomBetween(0, height),
+        vx: randomBetween(-0.5, 0.5),
+        vy: randomBetween(-0.35, 0.35),
+        radius: randomBetween(0.7, 2.6),
+        alpha: randomBetween(0.25, 0.95)
+      };
+    }
+
+    function syncParticles() {
+      while (particles.length < state.density) {
+        particles.push(createParticle());
+      }
+
+      while (particles.length > state.density) {
+        particles.pop();
+      }
+    }
+
+    function drawScene() {
+      context.clearRect(0, 0, width, height);
+
+      const glowStrength = state.glow;
+      const speed = state.speed;
+      context.lineWidth = 1;
+
+      for (const particle of particles) {
+        particle.x += particle.vx * speed;
+        particle.y += particle.vy * speed;
+
+        if (particle.x < -24) particle.x = width + 24;
+        if (particle.x > width + 24) particle.x = -24;
+        if (particle.y < -24) particle.y = height + 24;
+        if (particle.y > height + 24) particle.y = -24;
+
+        context.beginPath();
+        context.fillStyle = `rgba(140, 214, 255, ${particle.alpha * (0.4 + glowStrength * 0.55)})`;
+        context.arc(particle.x, particle.y, particle.radius + (glowStrength * 0.8), 0, Math.PI * 2);
+        context.fill();
+      }
+
+      for (let i = 0; i < particles.length; i += 1) {
+        const a = particles[i];
+
+        for (let j = i + 1; j < particles.length; j += 1) {
+          const b = particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distance = Math.hypot(dx, dy);
+          const maxDistance = 120 + (state.glow * 70);
+
+          if (distance < maxDistance) {
+            const alpha = (1 - (distance / maxDistance)) * 0.18 * (0.55 + glowStrength);
+            context.beginPath();
+            context.strokeStyle = `rgba(119, 184, 255, ${alpha})`;
+            context.moveTo(a.x, a.y);
+            context.lineTo(b.x, b.y);
+            context.stroke();
+          }
+        }
+      }
+
+      animationFrame = window.requestAnimationFrame(drawScene);
+    }
+
+    function applyTheme() {
+      if (state.cinematic) {
+        document.documentElement.style.setProperty("--accent", "#58d3b3");
+        document.documentElement.style.setProperty("--accent-2", "#77b8ff");
+        document.documentElement.style.setProperty("--accent-3", "#ffd06f");
+      } else {
+        document.documentElement.style.setProperty("--accent", "#ffb86d");
+        document.documentElement.style.setProperty("--accent-2", "#ff8a80");
+        document.documentElement.style.setProperty("--accent-3", "#ffe39c");
+      }
+    }
+
+    function setRootVariables() {
+      document.documentElement.style.setProperty("--density", state.density);
+      document.documentElement.style.setProperty("--speed", state.speed.toFixed(2));
+      document.documentElement.style.setProperty("--glow", state.glow.toFixed(2));
+    }
+
+    function updateHistogram() {
+      const shape = profileShapes[state.profile];
+      const bars = [...signalGrid.children];
+
+      bars.forEach((bar, index) => {
+        const base = shape[index];
+        const densityLift = (state.density - 44) * 0.55;
+        const speedLift = (state.speed - 0.7) * 45;
+        const glowLift = (state.glow - 0.68) * 32;
+        const heightPercent = Math.max(14, Math.min(100, base + densityLift + speedLift + glowLift));
+        bar.style.height = `${heightPercent}%`;
+      });
+
+      document.getElementById("histogram-label").textContent = `Profile: ${state.profile}`;
+    }
+
+    function updateReadouts() {
+      document.getElementById("density-output").textContent = String(state.density);
+      document.getElementById("speed-output").textContent = state.speed.toFixed(2);
+      document.getElementById("glow-output").textContent = state.glow.toFixed(2);
+      document.getElementById("legend-density").textContent = String(state.density);
+      document.getElementById("legend-speed").textContent = state.speed.toFixed(2);
+      document.getElementById("legend-glow").textContent = state.glow.toFixed(2);
+      document.getElementById("terminal-density").textContent = `${state.density} nodes`;
+      document.getElementById("terminal-mode").textContent = `${state.cinematic ? "cinematic" : "editorial"} / ${state.profile}`;
+    }
+
+    function updateScenario() {
+      const { immersive, data, editorial } = state.flags;
+      const textParts = [];
+
+      textParts.push("This static page behaves like");
+      textParts.push(immersive ? "a cinematic control room" : "a precise interface mock");
+      textParts.push(data ? "with dense telemetry" : "with restrained instrumentation");
+      textParts.push(editorial ? "and an editorial, narrative voice." : "and a direct systems-language tone.");
+
+      const densityScore = Math.round(Math.min(96, 42 + state.density * 0.9 + (immersive ? 8 : 0)));
+      const depthScore = Math.round(Math.min(94, 36 + state.speed * 38 + (data ? 16 : 4) + (editorial ? 6 : 0)));
+      const suitabilityScore = Math.round(Math.max(56, 98 - (immersive ? 7 : 0) - (data ? 4 : 0) - (editorial ? 2 : 0)));
+      const confidence = Math.round((densityScore + depthScore + suitabilityScore) / 3);
+
+      document.getElementById("scenario-text").textContent = textParts.join(" ");
+      document.getElementById("scenario-badge").textContent = `Profile confidence: ${confidence}%`;
+      document.getElementById("progress-density").style.width = `${densityScore}%`;
+      document.getElementById("progress-depth").style.width = `${depthScore}%`;
+      document.getElementById("progress-suitability").style.width = `${suitabilityScore}%`;
+      document.getElementById("progress-density-label").textContent = `${densityScore}%`;
+      document.getElementById("progress-depth-label").textContent = `${depthScore}%`;
+      document.getElementById("progress-suitability-label").textContent = `${suitabilityScore}%`;
+      document.getElementById("state-value").textContent = editorial ? "Narrative" : "Reactive";
+      document.getElementById("surface-value").textContent = immersive ? "Canvas + SVG" : "SVG + CSS";
+      document.getElementById("terminal-response").textContent = editorial ? "generated copy + staged reveal" : "adaptive motion + staged reveal";
+    }
+
+    function syncButtons() {
+      profileButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.profile === state.profile));
+      });
+
+      flagButtons.forEach((button) => {
+        const active = state.flags[button.dataset.flag];
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    function persistState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function hydrateState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+
+        if (!raw) {
+          return;
+        }
+
+        const saved = JSON.parse(raw);
+        state.density = saved.density ?? state.density;
+        state.speed = saved.speed ?? state.speed;
+        state.glow = saved.glow ?? state.glow;
+        state.profile = saved.profile ?? state.profile;
+        state.flags = { ...state.flags, ...(saved.flags || {}) };
+        state.cinematic = saved.cinematic ?? state.cinematic;
+      } catch (error) {
+        console.warn("Failed to restore state", error);
+      }
+    }
+
+    function syncInputs() {
+      densityRange.value = String(state.density);
+      speedRange.value = String(Math.round(state.speed * 100));
+      glowRange.value = String(Math.round(state.glow * 100));
+      document.body.dataset.mode = state.cinematic ? "cinematic" : "editorial";
+      modeButton.textContent = state.cinematic ? "Shift Atmosphere" : "Return to Cinematic";
+    }
+
+    function render() {
+      applyTheme();
+      setRootVariables();
+      syncParticles();
+      updateReadouts();
+      updateHistogram();
+      updateScenario();
+      syncButtons();
+      syncInputs();
+      persistState();
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const parts = now.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZoneName: "short"
+      });
+      document.getElementById("clock-inline").textContent = parts;
+      document.getElementById("footer-clock").textContent = parts;
+    }
+
+    function initializeReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      }, { threshold: 0.16 });
+
+      revealTargets.forEach((target, index) => {
+        target.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+        observer.observe(target);
+      });
+    }
+
+    densityRange.addEventListener("input", (event) => {
+      state.density = Number(event.target.value);
+      render();
+    });
+
+    speedRange.addEventListener("input", (event) => {
+      state.speed = Number(event.target.value) / 100;
+      render();
+    });
+
+    glowRange.addEventListener("input", (event) => {
+      state.glow = Number(event.target.value) / 100;
+      render();
+    });
+
+    profileButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        state.profile = button.dataset.profile;
+        render();
+      });
+    });
+
+    flagButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.dataset.flag;
+        state.flags[key] = !state.flags[key];
+        render();
+      });
+    });
+
+    modeButton.addEventListener("click", () => {
+      state.cinematic = !state.cinematic;
+      render();
+    });
+
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("beforeunload", () => {
+      window.cancelAnimationFrame(animationFrame);
+    });
+
+    hydrateState();
+    resizeCanvas();
+    initializeReveal();
+    render();
+    updateClock();
+    drawScene();
+    window.setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
