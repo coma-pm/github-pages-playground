@@ -20,15 +20,17 @@
 
   <style>
     :root {
-      color-scheme: light;
-      --bg: #f8f8f6;
-      --panel: #ffffff;
-      --line: #d8ddd6;
-      --text: #182019;
-      --muted: #5f6c61;
-      --accent: #1d6b4f;
-      --accent-strong: #14523b;
-      --output: #edf4ee;
+      color-scheme: dark;
+      --bg: #08111c;
+      --panel: rgba(9, 22, 34, 0.78);
+      --panel-strong: rgba(12, 28, 42, 0.9);
+      --line: rgba(146, 199, 227, 0.16);
+      --text: #eef5ff;
+      --muted: #91a8bc;
+      --accent: #58d3b3;
+      --accent-strong: #77b8ff;
+      --output: rgba(5, 11, 18, 0.82);
+      --shadow: 0 32px 90px rgba(0, 0, 0, 0.38);
     }
 
     * {
@@ -38,17 +40,35 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Avenir Next", "Hiragino Sans", sans-serif;
+      font-family: "Space Grotesk", "Avenir Next", "Hiragino Sans", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top right, rgba(120, 171, 146, 0.2), transparent 30%),
-        linear-gradient(180deg, #f6faf6 0%, #eff3ef 100%);
+        radial-gradient(circle at 18% 16%, rgba(83, 153, 255, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 10%, rgba(88, 211, 179, 0.14), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(255, 208, 111, 0.08), transparent 22%),
+        linear-gradient(180deg, #08111c 0%, #091420 36%, #050b12 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(140, 193, 221, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(140, 193, 221, 0.045) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+      opacity: 0.55;
     }
 
     main {
+      position: relative;
+      z-index: 1;
       width: min(980px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 40px 0 64px;
+      padding: 24px 0 72px;
     }
 
     .topbar {
@@ -56,33 +76,82 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
     }
 
-    .topbar a {
-      color: var(--accent);
+    .brand-pill,
+    .nav-link,
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 999px;
       text-decoration: none;
       font-weight: 700;
+      transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+    }
+
+    .brand-pill,
+    .nav-link {
+      border: 1px solid var(--line);
+      background: rgba(8, 18, 28, 0.55);
+      color: var(--text);
+      backdrop-filter: blur(20px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 26px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(10, 23, 35, 0.82), rgba(7, 16, 24, 0.84));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--accent);
+      font-size: 0.84rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
     }
 
     h1 {
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      letter-spacing: -0.04em;
+      margin: 0;
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
     }
 
     .lead {
-      margin: 0 0 28px;
+      margin: 0;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.8;
+      max-width: 60ch;
     }
 
     .workspace {
       padding: 24px;
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 28px;
       background: var(--panel);
-      box-shadow: 0 20px 50px rgba(40, 60, 46, 0.08);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
     }
 
     textarea {
@@ -91,11 +160,13 @@
       padding: 16px;
       border: 1px solid var(--line);
       border-radius: 16px;
-      background: #fcfdfb;
-      font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+      background: rgba(5, 11, 18, 0.78);
+      color: var(--text);
+      font-family: "IBM Plex Mono", "SFMono-Regular", "Menlo", "Consolas", monospace;
       font-size: 14px;
       line-height: 1.6;
       resize: vertical;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
     }
 
     .toolbar {
@@ -123,7 +194,7 @@
       padding: 10px 14px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: #fcfdfb;
+      background: rgba(5, 11, 18, 0.78);
       color: var(--text);
       font: inherit;
     }
@@ -137,29 +208,32 @@
     }
 
     button {
-      padding: 12px 18px;
-      border: 0;
-      border-radius: 999px;
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, rgba(88, 211, 179, 0.95), rgba(119, 184, 255, 0.92));
+      color: #041018;
       cursor: pointer;
+      box-shadow: 0 14px 40px rgba(88, 211, 179, 0.2);
     }
 
+    .brand-pill:hover,
+    .brand-pill:focus-visible,
+    .nav-link:hover,
+    .nav-link:focus-visible,
     button:hover,
     button:focus-visible {
-      background: var(--accent-strong);
+      transform: translateY(-1px);
     }
 
     button.secondary {
-      background: transparent;
-      color: var(--accent);
+      background: rgba(11, 25, 38, 0.68);
+      color: var(--text);
       border: 1px solid var(--line);
+      box-shadow: none;
     }
 
     button.secondary:hover,
     button.secondary:focus-visible {
-      background: rgba(29, 107, 79, 0.08);
+      background: rgba(88, 211, 179, 0.12);
     }
 
     button:disabled {
@@ -173,11 +247,11 @@
     }
 
     .status[data-state="error"] {
-      color: #a0362d;
+      color: #ff8a80;
     }
 
     .status[data-state="success"] {
-      color: var(--accent-strong);
+      color: var(--accent);
     }
 
     pre {
@@ -186,14 +260,21 @@
       padding: 16px;
       border-radius: 16px;
       background: var(--output);
+      border: 1px solid rgba(146, 199, 227, 0.12);
       overflow-x: auto;
       white-space: pre-wrap;
       line-height: 1.6;
+      color: var(--text);
+      font-family: "IBM Plex Mono", "SFMono-Regular", "Menlo", "Consolas", monospace;
     }
 
     @media (max-width: 640px) {
       main {
         padding-top: 24px;
+      }
+
+      .hero {
+        padding: 24px;
       }
 
       .workspace {
@@ -205,13 +286,20 @@
 <body>
   <main>
     <div class="topbar">
-      <a href="./index.html">Back to Index</a>
+      <a class="brand-pill" href="./index.html">GitHub Pages Playground</a>
+      <div class="topbar-nav">
+        <a class="nav-link" href="./index.html">Index</a>
+        <a class="nav-link" href="./static-showcase.html">Static Showcase</a>
+      </div>
     </div>
 
-    <h1>Python Editor</h1>
-    <p class="lead">
-      Run Python code directly in the browser.
-    </p>
+    <section class="hero">
+      <p class="eyebrow">Interactive Tool</p>
+      <h1>Python Editor</h1>
+      <p class="lead">
+        Run Python code directly in the browser with the same visual language as the rest of the playground.
+      </p>
+    </section>
 
     <section class="workspace">
       <div class="toolbar">
