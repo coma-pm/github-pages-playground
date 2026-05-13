@@ -226,6 +226,7 @@
         <div class="toolbar-group">
           <button class="secondary" type="button" id="reset-button">Load Sample</button>
           <button class="secondary" type="button" id="clear-button">Clear Output</button>
+          <button class="secondary" type="button" id="share-button">Copy Share Link</button>
         </div>
       </div>
 
@@ -283,6 +284,7 @@ print("words =", len(text.split()))`
     const runButtonEl = document.getElementById("run-button");
     const resetButtonEl = document.getElementById("reset-button");
     const clearButtonEl = document.getElementById("clear-button");
+    const shareButtonEl = document.getElementById("share-button");
 
     let pyodide = null;
 
@@ -300,7 +302,23 @@ print("words =", len(text.split()))`
       localStorage.setItem(STORAGE_KEY, code);
     }
 
+    function getSharedUrl(code) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("code", code);
+      return url.toString();
+    }
+
     function loadStoredCode() {
+      const params = new URLSearchParams(window.location.search);
+      const sharedCode = params.get("code");
+
+      if (sharedCode) {
+        codeEl.value = sharedCode;
+        localStorage.setItem(STORAGE_KEY, sharedCode);
+        setStatus("Loaded shared code from URL", "success");
+        return;
+      }
+
       const storedCode = localStorage.getItem(STORAGE_KEY);
 
       if (storedCode) {
@@ -384,6 +402,20 @@ print("words =", len(text.split()))`
     clearButtonEl.addEventListener("click", () => {
       outputEl.textContent = "";
       setStatus("Output cleared");
+    });
+
+    shareButtonEl.addEventListener("click", async () => {
+      const shareUrl = getSharedUrl(codeEl.value);
+
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setStatus("Share link copied", "success");
+      } catch (error) {
+        outputEl.textContent = shareUrl;
+        appendOutput("");
+        appendOutput(`Clipboard error: ${error.message}`);
+        setStatus("Share link shown in output", "error");
+      }
     });
 
     runButtonEl.addEventListener("click", runPython);
