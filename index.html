@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+
+  <title>GitHub Pages Playground</title>
+</head>
+
+<body>
+
+  <h1>GitHub Pages Playground</h1>
+
+  <button onclick="runPython()">
+    Run Python
+  </button>
+
+  <pre id="output"></pre>
+
+  <script type="module">
+
+    import { loadPyodide }
+      from "https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.mjs";
+
+    const pyodide = await loadPyodide();
+
+    window.runPython = async function () {
+
+      const result =
+        await pyodide.runPythonAsync(`
+sum([1, 2, 3, 4, 5])
+        `);
+
+      document.getElementById("output")
+        .textContent = "Result: " + result;
+    };
+
+  </script>
+
+</body>
+</html>
