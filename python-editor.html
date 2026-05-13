@@ -98,6 +98,36 @@
       resize: vertical;
     }
 
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    label {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    select {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fcfdfb;
+      color: var(--text);
+      font: inherit;
+    }
+
     .actions {
       display: flex;
       align-items: center;
@@ -121,9 +151,33 @@
       background: var(--accent-strong);
     }
 
+    button.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--line);
+    }
+
+    button.secondary:hover,
+    button.secondary:focus-visible {
+      background: rgba(29, 107, 79, 0.08);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+
     .status {
       color: var(--muted);
       font-size: 0.95rem;
+    }
+
+    .status[data-state="error"] {
+      color: #a0362d;
+    }
+
+    .status[data-state="success"] {
+      color: var(--accent-strong);
     }
 
     pre {
@@ -160,6 +214,21 @@
     </p>
 
     <section class="workspace">
+      <div class="toolbar">
+        <div class="toolbar-group">
+          <label for="sample-select">Sample</label>
+          <select id="sample-select">
+            <option value="hello">Hello Pyodide</option>
+            <option value="math">Math and Loop</option>
+            <option value="text">Text Processing</option>
+          </select>
+        </div>
+        <div class="toolbar-group">
+          <button class="secondary" type="button" id="reset-button">Load Sample</button>
+          <button class="secondary" type="button" id="clear-button">Clear Output</button>
+        </div>
+      </div>
+
       <textarea id="code">print("Hello Pyodide")
 
 numbers = [1, 2, 3, 4, 5]
@@ -170,7 +239,7 @@ for i in range(3):
     print("i =", i)</textarea>
 
       <div class="actions">
-        <button onclick="runPython()">Run Python</button>
+        <button type="button" id="run-button" disabled>Run Python</button>
         <div class="status" id="status">Loading Pyodide...</div>
       </div>
 
@@ -181,33 +250,101 @@ for i in range(3):
   <script type="module">
     import { loadPyodide } from "https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.mjs";
 
+    const STORAGE_KEY = "github-pages-playground.python-editor.code";
+    const DEFAULT_SAMPLE = "hello";
+    const samples = {
+      hello: `print("Hello Pyodide")
+
+numbers = [1, 2, 3, 4, 5]
+
+print("sum =", sum(numbers))
+
+for i in range(3):
+    print("i =", i)`,
+      math: `from math import sqrt
+
+values = [4, 9, 16, 25]
+
+for value in values:
+    print(f"sqrt({value}) =", sqrt(value))
+
+print("done")`,
+      text: `text = "GitHub Pages Playground"
+
+print(text.upper())
+print(text.replace(" ", "-").lower())
+print("words =", len(text.split()))`
+    };
+
     const outputEl = document.getElementById("output");
     const statusEl = document.getElementById("status");
     const codeEl = document.getElementById("code");
+    const sampleSelectEl = document.getElementById("sample-select");
+    const runButtonEl = document.getElementById("run-button");
+    const resetButtonEl = document.getElementById("reset-button");
+    const clearButtonEl = document.getElementById("clear-button");
+
+    let pyodide = null;
+
+    function setStatus(message, state = "idle") {
+      statusEl.textContent = message;
+      statusEl.dataset.state = state;
+    }
 
     function appendOutput(text) {
       outputEl.textContent += text + "\n";
     }
 
-    const pyodide = await loadPyodide();
-    statusEl.textContent = "Pyodide loaded";
+    function setEditorCode(code) {
+      codeEl.value = code;
+      localStorage.setItem(STORAGE_KEY, code);
+    }
 
-    pyodide.setStdout({
-      batched: (text) => {
-        appendOutput(text);
+    function loadStoredCode() {
+      const storedCode = localStorage.getItem(STORAGE_KEY);
+
+      if (storedCode) {
+        codeEl.value = storedCode;
+        setStatus("Restored saved draft", "success");
+        return;
       }
-    });
 
-    pyodide.setStderr({
-      batched: (text) => {
-        appendOutput(text);
+      setEditorCode(samples[DEFAULT_SAMPLE]);
+    }
+
+    async function initializePyodide() {
+      try {
+        pyodide = await loadPyodide();
+        pyodide.setStdout({
+          batched: (text) => {
+            appendOutput(text);
+          }
+        });
+
+        pyodide.setStderr({
+          batched: (text) => {
+            appendOutput(text);
+          }
+        });
+
+        runButtonEl.disabled = false;
+        setStatus("Pyodide loaded", "success");
+      } catch (error) {
+        setStatus("Failed to load Pyodide. Reload the page and try again.", "error");
+        appendOutput(`Load error: ${error.message}`);
       }
-    });
+    }
 
-    window.runPython = async function () {
+    async function runPython() {
+      if (!pyodide) {
+        setStatus("Pyodide is not ready yet", "error");
+        return;
+      }
+
       outputEl.textContent = "";
-
       const code = codeEl.value;
+      runButtonEl.disabled = true;
+      setStatus("Running Python...", "success");
 
       try {
         const result = await pyodide.runPythonAsync(code);
@@ -215,10 +352,44 @@ for i in range(3):
         if (result !== undefined) {
           appendOutput(String(result));
         }
+
+        setStatus("Run completed", "success");
       } catch (error) {
-        appendOutput(error);
+        appendOutput(String(error));
+        setStatus("Run failed", "error");
+      } finally {
+        runButtonEl.disabled = false;
       }
-    };
+    }
+
+    codeEl.addEventListener("input", () => {
+      localStorage.setItem(STORAGE_KEY, codeEl.value);
+      setStatus("Draft saved locally");
+    });
+
+    sampleSelectEl.addEventListener("change", () => {
+      const selectedSample = samples[sampleSelectEl.value];
+      setEditorCode(selectedSample);
+      outputEl.textContent = "";
+      setStatus("Sample loaded", "success");
+    });
+
+    resetButtonEl.addEventListener("click", () => {
+      const selectedSample = samples[sampleSelectEl.value];
+      setEditorCode(selectedSample);
+      outputEl.textContent = "";
+      setStatus("Sample reloaded", "success");
+    });
+
+    clearButtonEl.addEventListener("click", () => {
+      outputEl.textContent = "";
+      setStatus("Output cleared");
+    });
+
+    runButtonEl.addEventListener("click", runPython);
+
+    loadStoredCode();
+    initializePyodide();
   </script>
 </body>
 </html>
