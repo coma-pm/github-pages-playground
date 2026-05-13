@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Editor | GitHub Pages Playground</title>
+  <title>Pythonエディタ | GitHub Pages Playground</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6HSYY8Z3X"></script>
@@ -288,48 +288,48 @@
     <div class="topbar">
       <a class="brand-pill" href="./index.html">GitHub Pages Playground</a>
       <div class="topbar-nav">
-        <a class="nav-link" href="./index.html">Index</a>
-        <a class="nav-link" href="./static-showcase.html">Static Showcase</a>
+        <a class="nav-link" href="./index.html">インデックス</a>
+        <a class="nav-link" href="./static-showcase.html">静的ショーケース</a>
       </div>
     </div>
 
     <section class="hero">
-      <p class="eyebrow">Interactive Tool</p>
-      <h1>Python Editor</h1>
+      <p class="eyebrow">インタラクティブツール</p>
+      <h1>Pythonエディタ</h1>
       <p class="lead">
-        Run Python code directly in the browser with the same visual language as the rest of the playground.
+        プレイグラウンド全体と統一した見た目のまま、ブラウザ上で Python コードを直接実行できます。
       </p>
     </section>
 
     <section class="workspace">
       <div class="toolbar">
         <div class="toolbar-group">
-          <label for="sample-select">Sample</label>
+          <label for="sample-select">サンプル</label>
           <select id="sample-select">
-            <option value="hello">Hello Pyodide</option>
-            <option value="math">Math and Loop</option>
-            <option value="text">Text Processing</option>
+            <option value="hello">Pyodideでこんにちは</option>
+            <option value="math">計算とループ</option>
+            <option value="text">テキスト処理</option>
           </select>
         </div>
         <div class="toolbar-group">
-          <button class="secondary" type="button" id="reset-button">Load Sample</button>
-          <button class="secondary" type="button" id="clear-button">Clear Output</button>
-          <button class="secondary" type="button" id="share-button">Copy Share Link</button>
+          <button class="secondary" type="button" id="reset-button">サンプルを読み込む</button>
+          <button class="secondary" type="button" id="clear-button">出力を消去</button>
+          <button class="secondary" type="button" id="share-button">共有リンクをコピー</button>
         </div>
       </div>
 
-      <textarea id="code">print("Hello Pyodide")
+      <textarea id="code">print("こんにちは、Pyodide")
 
 numbers = [1, 2, 3, 4, 5]
 
-print("sum =", sum(numbers))
+print("合計 =", sum(numbers))
 
 for i in range(3):
     print("i =", i)</textarea>
 
       <div class="actions">
-        <button type="button" id="run-button" disabled>Run Python</button>
-        <div class="status" id="status">Loading Pyodide...</div>
+        <button type="button" id="run-button" disabled>Pythonを実行</button>
+        <div class="status" id="status">Pyodide を読み込み中...</div>
       </div>
 
       <pre id="output"></pre>
@@ -342,11 +342,11 @@ for i in range(3):
     const STORAGE_KEY = "github-pages-playground.python-editor.code";
     const DEFAULT_SAMPLE = "hello";
     const samples = {
-      hello: `print("Hello Pyodide")
+      hello: `print("こんにちは、Pyodide")
 
 numbers = [1, 2, 3, 4, 5]
 
-print("sum =", sum(numbers))
+print("合計 =", sum(numbers))
 
 for i in range(3):
     print("i =", i)`,
@@ -357,12 +357,12 @@ values = [4, 9, 16, 25]
 for value in values:
     print(f"sqrt({value}) =", sqrt(value))
 
-print("done")`,
+print("完了")`,
       text: `text = "GitHub Pages Playground"
 
 print(text.upper())
 print(text.replace(" ", "-").lower())
-print("words =", len(text.split()))`
+print("単語数 =", len(text.split()))`
     };
 
     const outputEl = document.getElementById("output");
@@ -403,7 +403,7 @@ print("words =", len(text.split()))`
       if (sharedCode) {
         codeEl.value = sharedCode;
         localStorage.setItem(STORAGE_KEY, sharedCode);
-        setStatus("Loaded shared code from URL", "success");
+        setStatus("URL から共有コードを読み込みました", "success");
         return;
       }
 
@@ -411,7 +411,7 @@ print("words =", len(text.split()))`
 
       if (storedCode) {
         codeEl.value = storedCode;
-        setStatus("Restored saved draft", "success");
+        setStatus("保存済みの下書きを復元しました", "success");
         return;
       }
 
@@ -434,23 +434,23 @@ print("words =", len(text.split()))`
         });
 
         runButtonEl.disabled = false;
-        setStatus("Pyodide loaded", "success");
+        setStatus("Pyodide の読み込みが完了しました", "success");
       } catch (error) {
-        setStatus("Failed to load Pyodide. Reload the page and try again.", "error");
-        appendOutput(`Load error: ${error.message}`);
+        setStatus("Pyodide の読み込みに失敗しました。ページを再読み込みして再試行してください。", "error");
+        appendOutput(`読み込みエラー: ${error.message}`);
       }
     }
 
     async function runPython() {
       if (!pyodide) {
-        setStatus("Pyodide is not ready yet", "error");
+        setStatus("Pyodide の準備がまだ完了していません", "error");
         return;
       }
 
       outputEl.textContent = "";
       const code = codeEl.value;
       runButtonEl.disabled = true;
-      setStatus("Running Python...", "success");
+      setStatus("Python を実行中...", "success");
 
       try {
         const result = await pyodide.runPythonAsync(code);
@@ -459,10 +459,10 @@ print("words =", len(text.split()))`
           appendOutput(String(result));
         }
 
-        setStatus("Run completed", "success");
+        setStatus("実行が完了しました", "success");
       } catch (error) {
         appendOutput(String(error));
-        setStatus("Run failed", "error");
+        setStatus("実行に失敗しました", "error");
       } finally {
         runButtonEl.disabled = false;
       }
@@ -470,26 +470,26 @@ print("words =", len(text.split()))`
 
     codeEl.addEventListener("input", () => {
       localStorage.setItem(STORAGE_KEY, codeEl.value);
-      setStatus("Draft saved locally");
+      setStatus("下書きをローカルに保存しました");
     });
 
     sampleSelectEl.addEventListener("change", () => {
       const selectedSample = samples[sampleSelectEl.value];
       setEditorCode(selectedSample);
       outputEl.textContent = "";
-      setStatus("Sample loaded", "success");
+      setStatus("サンプルを読み込みました", "success");
     });
 
     resetButtonEl.addEventListener("click", () => {
       const selectedSample = samples[sampleSelectEl.value];
       setEditorCode(selectedSample);
       outputEl.textContent = "";
-      setStatus("Sample reloaded", "success");
+      setStatus("サンプルを再読み込みしました", "success");
     });
 
     clearButtonEl.addEventListener("click", () => {
       outputEl.textContent = "";
-      setStatus("Output cleared");
+      setStatus("出力を消去しました");
     });
 
     shareButtonEl.addEventListener("click", async () => {
@@ -497,12 +497,12 @@ print("words =", len(text.split()))`
 
       try {
         await navigator.clipboard.writeText(shareUrl);
-        setStatus("Share link copied", "success");
+        setStatus("共有リンクをコピーしました", "success");
       } catch (error) {
         outputEl.textContent = shareUrl;
         appendOutput("");
-        appendOutput(`Clipboard error: ${error.message}`);
-        setStatus("Share link shown in output", "error");
+        appendOutput(`クリップボードエラー: ${error.message}`);
+        setStatus("共有リンクを出力欄に表示しました", "error");
       }
     });
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Static Showcase | GitHub Pages Playground</title>
+  <title>静的ショーケース | GitHub Pages Playground</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6HSYY8Z3X"></script>
@@ -846,53 +846,53 @@
     <div class="topbar reveal">
       <a class="brand-pill" href="./index.html">GitHub Pages Playground</a>
       <div class="topbar-nav">
-        <a class="back-link" href="./python-editor.html">Python Editor</a>
-        <a class="nav-pill" href="#controls">Tune It <span>Local controls only</span></a>
-        <a class="nav-pill" href="#story">Read the Map <span>SVG + motion</span></a>
-        <button class="mode-button" type="button" id="mode-button">Shift Atmosphere</button>
+        <a class="back-link" href="./python-editor.html">Pythonエディタ</a>
+        <a class="nav-pill" href="#controls">調整する <span>ローカル操作のみ</span></a>
+        <a class="nav-pill" href="#story">マップを見る <span>SVG とモーション</span></a>
+        <button class="mode-button" type="button" id="mode-button">雰囲気を切り替える</button>
       </div>
     </div>
 
     <section class="hero">
       <article class="hero-copy reveal">
         <div>
-          <p class="eyebrow">Static Web Stress Test</p>
-          <h1>How rich can one HTML page get?</h1>
+          <p class="eyebrow">静的 Web 限界テスト</p>
+          <h1>1枚の HTML はどこまでリッチになれるか</h1>
           <p class="lead">
-            No server, no build step, no framework runtime. This page is a deliberately overbuilt static artifact:
-            animated background rendering, stateful controls, SVG scene composition, motion, generated copy, and a
-            dashboard that reshapes itself in the browser.
+            サーバーなし、ビルドなし、フレームワーク実行基盤なし。それでもこのページは、アニメーション背景、
+            状態を持つコントロール、SVG シーン構成、モーション、動的に生成される文言、そしてブラウザ内で
+            形を変えるダッシュボードをあえて詰め込んだ静的実験です。
           </p>
         </div>
 
         <div class="hero-actions">
-          <a class="button-primary" href="#controls">Open the Control Deck</a>
-          <a class="button-secondary" href="#lab">Compose a Scenario</a>
+          <a class="button-primary" href="#controls">コントロールを開く</a>
+          <a class="button-secondary" href="#lab">シナリオを組み立てる</a>
         </div>
 
         <div class="stats-row">
           <div class="stat">
-            <span class="stat-label">Transport</span>
-            <span class="stat-value">0 requests</span>
-            <p class="stat-note">After first load, all interaction stays client-side.</p>
+            <span class="stat-label">通信</span>
+            <span class="stat-value">0 リクエスト</span>
+            <p class="stat-note">初回読み込み後の操作はすべてクライアント側で完結します。</p>
           </div>
           <div class="stat">
-            <span class="stat-label">Surface</span>
+            <span class="stat-label">描画層</span>
             <span class="stat-value" id="surface-value">Canvas + SVG</span>
-            <p class="stat-note">Two rendering layers, one static document.</p>
+            <p class="stat-note">単一の静的ドキュメントに 2 つの描画レイヤーを重ねています。</p>
           </div>
           <div class="stat">
-            <span class="stat-label">State</span>
-            <span class="stat-value" id="state-value">Reactive</span>
-            <p class="stat-note">Sliders, toggles, counters, and generated text.</p>
+            <span class="stat-label">状態</span>
+            <span class="stat-value" id="state-value">反応型</span>
+            <p class="stat-note">スライダー、トグル、カウンター、生成文言が連動します。</p>
           </div>
         </div>
       </article>
 
       <aside class="hero-panel reveal">
         <div class="panel-topline">
-          <span>Signal Core</span>
-          <span class="mini-label"><span class="live-dot"></span> Live</span>
+          <span>信号コア</span>
+          <span class="mini-label"><span class="live-dot"></span> 稼働中</span>
         </div>
 
         <div class="panel-visual">
@@ -908,9 +908,9 @@
         </div>
 
         <div class="mini-terminal" aria-live="polite">
-          <div class="terminal-line"><strong>mode</strong><span id="terminal-mode">cinematic / balanced</span></div>
-          <div class="terminal-line"><strong>density</strong><span id="terminal-density">44 nodes</span></div>
-          <div class="terminal-line"><strong>response</strong><span id="terminal-response">adaptive motion + staged reveal</span></div>
+          <div class="terminal-line"><strong>mode</strong><span id="terminal-mode">シネマティック / バランス</span></div>
+          <div class="terminal-line"><strong>density</strong><span id="terminal-density">44 ノード</span></div>
+          <div class="terminal-line"><strong>response</strong><span id="terminal-response">適応モーション + 段階表示</span></div>
           <div class="terminal-line"><strong>clock</strong><span id="clock-inline">--:--:--</span></div>
         </div>
       </aside>
@@ -919,31 +919,31 @@
     <section class="section-card reveal">
       <div class="section-heading">
         <div class="section-topline">
-          <span>Capabilities</span>
-          <span>Single file, high density</span>
+          <span>表現力</span>
+          <span>単一ファイル、高密度</span>
         </div>
-        <h2>Static does not mean flat</h2>
+        <h2>静的でも平坦とは限らない</h2>
         <p>
-          A plain GitHub Pages deployment can still deliver layered motion, dashboard-style composition,
-          reactive controls, local persistence, and polished visual rhythm if the page is authored deliberately.
+          GitHub Pages の素朴な静的配信でも、設計を詰めれば、レイヤー化したモーション、ダッシュボード風の構成、
+          反応型コントロール、ローカル保存、磨かれた視覚リズムまで実現できます。
         </p>
       </div>
 
       <div class="feature-grid">
         <article class="feature-card">
           <div class="feature-icon">01</div>
-          <h3>Scene Rendering</h3>
-          <p>Canvas particles and connective lines create depth without requiring any backend or WebGL setup.</p>
+          <h3>シーン描画</h3>
+          <p>Canvas の粒子と接続線で、バックエンドや WebGL なしでも奥行きを作れます。</p>
         </article>
         <article class="feature-card">
           <div class="feature-icon">02</div>
-          <h3>Reactive UI</h3>
-          <p>Controls update visuals, metrics, generated copy, and bars in real time with plain browser APIs.</p>
+          <h3>反応型 UI</h3>
+          <p>素のブラウザ API だけで、見た目、数値、生成文、バー表示をリアルタイム更新します。</p>
         </article>
         <article class="feature-card">
           <div class="feature-icon">03</div>
-          <h3>Composed Narrative</h3>
-          <p>SVG paths, timed reveals, and staged sections make the page read more like an experience than a document.</p>
+          <h3>演出的な構成</h3>
+          <p>SVG の経路、時間差表示、段階的なセクションによって、文書より体験に近い読み味を作れます。</p>
         </article>
       </div>
     </section>
@@ -951,50 +951,50 @@
     <section class="section-card reveal" id="controls">
       <div class="section-heading">
         <div class="section-topline">
-          <span>Control Deck</span>
-          <span>Inputs mutate the page</span>
+          <span>コントロールデッキ</span>
+          <span>入力でページが変化</span>
         </div>
-        <h2>Push the interface harder</h2>
+        <h2>インターフェースをさらに押し込む</h2>
         <p>
-          The controls below change the density of the background field, motion speed, glow intensity, and the
-          dashboard profile. Everything stays inside a static document.
+          下の操作で、背景フィールドの密度、モーション速度、発光の強さ、ダッシュボードのプロファイルが変化します。
+          すべて単一の静的ドキュメント内で完結します。
         </p>
       </div>
 
       <div class="control-grid">
         <article class="chart-card">
           <div class="panel-topline">
-            <span>Signal Histogram</span>
-            <span id="histogram-label">Profile: balanced</span>
+            <span>信号ヒストグラム</span>
+            <span id="histogram-label">プロファイル: バランス</span>
           </div>
           <div class="signal-grid" id="signal-grid" aria-hidden="true"></div>
           <div class="legend-list">
             <div class="legend-item">
               <strong id="legend-density">44</strong>
-              Particle density
+              粒子密度
             </div>
             <div class="legend-item">
               <strong id="legend-speed">0.70</strong>
-              Motion speed
+              モーション速度
             </div>
             <div class="legend-item">
               <strong id="legend-glow">0.68</strong>
-              Atmosphere glow
+              発光強度
             </div>
           </div>
         </article>
 
         <article class="lab-card">
           <div class="panel-topline">
-            <span>Operator Inputs</span>
-            <span>Local state</span>
+            <span>操作入力</span>
+            <span>ローカル状態</span>
           </div>
 
           <div class="control-stack">
             <div class="sliders">
               <label class="slider-group" for="density-range">
                 <div class="slider-row">
-                  <span>Particle Density</span>
+                  <span>粒子密度</span>
                   <strong id="density-output">44</strong>
                 </div>
                 <input id="density-range" type="range" min="18" max="88" value="44" />
@@ -1002,7 +1002,7 @@
 
               <label class="slider-group" for="speed-range">
                 <div class="slider-row">
-                  <span>Motion Speed</span>
+                  <span>モーション速度</span>
                   <strong id="speed-output">0.70</strong>
                 </div>
                 <input id="speed-range" type="range" min="20" max="140" value="70" />
@@ -1010,7 +1010,7 @@
 
               <label class="slider-group" for="glow-range">
                 <div class="slider-row">
-                  <span>Glow Intensity</span>
+                  <span>発光強度</span>
                   <strong id="glow-output">0.68</strong>
                 </div>
                 <input id="glow-range" type="range" min="20" max="100" value="68" />
@@ -1019,20 +1019,20 @@
 
             <div>
               <div class="panel-topline">
-                <span>Atmosphere Profile</span>
-                <span>Preset curves</span>
+                <span>雰囲気プロファイル</span>
+                <span>プリセット曲線</span>
               </div>
               <div class="chip-row" id="profile-buttons">
-                <button class="toggle-chip" type="button" data-profile="balanced" aria-pressed="true">Balanced</button>
-                <button class="toggle-chip" type="button" data-profile="surge" aria-pressed="false">Surge</button>
-                <button class="toggle-chip" type="button" data-profile="pulse" aria-pressed="false">Pulse</button>
-                <button class="toggle-chip" type="button" data-profile="night" aria-pressed="false">Night</button>
+                <button class="toggle-chip" type="button" data-profile="balanced" aria-pressed="true">バランス</button>
+                <button class="toggle-chip" type="button" data-profile="surge" aria-pressed="false">サージ</button>
+                <button class="toggle-chip" type="button" data-profile="pulse" aria-pressed="false">パルス</button>
+                <button class="toggle-chip" type="button" data-profile="night" aria-pressed="false">ナイト</button>
               </div>
             </div>
 
             <p class="control-note">
-              This is the practical ceiling test for static hosting: substantial presentation logic, motion, and state,
-              while still shipping as a simple HTML file.
+              これは静的ホスティングの現実的な上限テストです。相当量の表示ロジック、モーション、状態管理を持ちながら、
+              配布物は単なる HTML ファイルのままです。
             </p>
           </div>
         </article>
@@ -1042,13 +1042,12 @@
     <section class="section-card reveal" id="story">
       <div class="section-heading">
         <div class="section-topline">
-          <span>Story Layer</span>
-          <span>SVG + CSS motion</span>
+          <span>物語レイヤー</span>
+          <span>SVG + CSS モーション</span>
         </div>
-        <h2>Vector composition can carry a whole scene</h2>
+        <h2>ベクター構成だけでも場面は成立する</h2>
         <p>
-          The map below is just inline SVG and CSS, but it still reads like a spatial control interface rather than a
-          flat illustration.
+          下のマップは単なるインライン SVG と CSS ですが、平面的な図ではなく、空間的な制御インターフェースとして読めます。
         </p>
       </div>
 
@@ -1058,7 +1057,7 @@
             <div class="mesh"></div>
             <div class="beam"></div>
             <div class="story-map">
-              <svg viewBox="0 0 700 420" role="img" aria-label="Abstract signal route map">
+              <svg viewBox="0 0 700 420" role="img" aria-label="抽象的な信号ルートマップ">
                 <defs>
                   <linearGradient id="routeA" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#77b8ff" />
@@ -1090,9 +1089,9 @@
                   <circle cx="612" cy="134" r="6" />
                 </g>
                 <g fill="#91a8bc" font-family="IBM Plex Mono, monospace" font-size="16">
-                  <text x="64" y="338">Origin</text>
-                  <text x="316" y="124">Relay</text>
-                  <text x="576" y="194">Output</text>
+                  <text x="64" y="338">起点</text>
+                  <text x="316" y="124">中継</text>
+                  <text x="576" y="194">出力</text>
                 </g>
               </svg>
             </div>
@@ -1101,32 +1100,32 @@
           <div class="story-meta">
             <div class="meta-box">
               <strong>SVG</strong>
-              Resolution independent and easy to art direct inline.
+              解像度に依存せず、インラインで演出調整しやすい形式です。
             </div>
             <div class="meta-box">
               <strong>CSS</strong>
-              Motion, glow, scan lines, and depth cues layer on top cleanly.
+              モーション、発光、走査線、奥行き表現を素直に重ねられます。
             </div>
             <div class="meta-box">
               <strong>HTML</strong>
-              The narrative framing and data labels stay accessible and indexable.
+              説明文やデータラベルを、アクセシブルかつ検索可能なまま維持できます。
             </div>
           </div>
         </article>
 
         <article class="story-card">
           <div class="panel-topline">
-            <span>Readout</span>
-            <span>What this proves</span>
+            <span>読み取り結果</span>
+            <span>このページが示すこと</span>
           </div>
-          <h3>Practical static limits</h3>
+          <h3>静的サイトの実用的な限界</h3>
           <p>
-            Static hosting breaks when you need protected data, coordinated multi-user state, or server-grade compute.
-            It does not break when you want dramatic visuals, responsive dashboards, narrative transitions, or rich local interaction.
+            静的ホスティングが苦しくなるのは、秘匿データ、複数ユーザーで共有する状態、サーバー級の計算が必要なときです。
+            一方で、強いビジュアル、反応の良いダッシュボード、演出的な遷移、濃いローカル操作は十分に実現できます。
           </p>
           <p>
-            In other words, the ceiling is higher than “simple brochure site.” The real constraints are persistence,
-            secrecy, and compute ownership, not polish.
+            つまり、静的サイトの上限は「単純な紹介ページ」よりずっと高いということです。制約になるのは見た目ではなく、
+            永続化、秘匿性、計算資源の所在です。
           </p>
         </article>
       </div>
@@ -1135,57 +1134,57 @@
     <section class="section-card reveal" id="lab">
       <div class="section-heading">
         <div class="section-topline">
-          <span>Scenario Lab</span>
-          <span>Generated from toggles</span>
+          <span>シナリオラボ</span>
+          <span>トグルから生成</span>
         </div>
-        <h2>Even the narrative can be dynamic</h2>
+        <h2>説明文すら動的に変えられる</h2>
         <p>
-          These toggles recompose the copy and capability bars below. It is still static deployment, just client-side
-          state and presentation logic.
+          これらのトグルは、下の説明文と能力バーの構成を組み替えます。やっていることは静的配信のまま、
+          クライアント側の状態管理と表示ロジックだけです。
         </p>
       </div>
 
       <div class="lab-grid">
         <article class="lab-card">
           <div class="panel-topline">
-            <span>Scenario Flags</span>
-            <span>3 local toggles</span>
+            <span>シナリオフラグ</span>
+            <span>3つのローカルトグル</span>
           </div>
           <div class="toggle-cluster">
-            <button class="toggle-chip" type="button" data-flag="immersive" aria-pressed="true">Immersive Motion</button>
-            <button class="toggle-chip" type="button" data-flag="data" aria-pressed="true">Dense Telemetry</button>
-            <button class="toggle-chip" type="button" data-flag="editorial" aria-pressed="false">Editorial Tone</button>
+            <button class="toggle-chip" type="button" data-flag="immersive" aria-pressed="true">没入感ある動き</button>
+            <button class="toggle-chip" type="button" data-flag="data" aria-pressed="true">高密度テレメトリ</button>
+            <button class="toggle-chip" type="button" data-flag="editorial" aria-pressed="false">編集的トーン</button>
           </div>
           <p class="control-note">
-            The result area updates the descriptive copy, confidence badge, and a small capability model. No network,
-            no template engine, no server function.
+            結果エリアでは、説明文、信頼度バッジ、小さな能力モデルが更新されます。ネットワークも、テンプレートエンジンも、
+            サーバー関数も不要です。
           </p>
         </article>
 
         <article class="lab-output">
-          <span class="output-badge" id="scenario-badge">Profile confidence: 84%</span>
+          <span class="output-badge" id="scenario-badge">プロファイル信頼度: 84%</span>
           <p class="output-text" id="scenario-text">
-            This static page behaves like a cinematic control room: animated, data-rich, and surprisingly reactive for a
-            single hosted document.
+            この静的ページは、シネマティックな制御室のように振る舞います。アニメーションし、情報量が多く、
+            単一のホスト済みドキュメントとしては驚くほど反応的です。
           </p>
           <div class="progress-list">
             <div class="progress-row">
               <div class="slider-row">
-                <span>Visual Density</span>
+                <span>視覚密度</span>
                 <strong id="progress-density-label">82%</strong>
               </div>
               <div class="progress-bar"><div class="progress-fill" id="progress-density"></div></div>
             </div>
             <div class="progress-row">
               <div class="slider-row">
-                <span>Interaction Depth</span>
+                <span>操作の深さ</span>
                 <strong id="progress-depth-label">78%</strong>
               </div>
               <div class="progress-bar"><div class="progress-fill" id="progress-depth"></div></div>
             </div>
             <div class="progress-row">
               <div class="slider-row">
-                <span>Static Suitability</span>
+                <span>静的適性</span>
                 <strong id="progress-suitability-label">91%</strong>
               </div>
               <div class="progress-bar"><div class="progress-fill" id="progress-suitability"></div></div>
@@ -1197,7 +1196,7 @@
 
     <div class="footer-row reveal">
       <p class="footer-note">
-        If you want to push further after this, the next ceiling is usually WebAssembly, offline storage, and external APIs.
+        さらに先へ進めるなら、次の上限はたいてい WebAssembly、オフライン保存、外部 API の連携です。
       </p>
       <div class="clock" id="footer-clock">--:--:--</div>
     </div>
@@ -1361,7 +1360,14 @@
         bar.style.height = `${heightPercent}%`;
       });
 
-      document.getElementById("histogram-label").textContent = `Profile: ${state.profile}`;
+      const profileLabels = {
+        balanced: "バランス",
+        surge: "サージ",
+        pulse: "パルス",
+        night: "ナイト"
+      };
+
+      document.getElementById("histogram-label").textContent = `プロファイル: ${profileLabels[state.profile]}`;
     }
 
     function updateReadouts() {
@@ -1371,18 +1377,25 @@
       document.getElementById("legend-density").textContent = String(state.density);
       document.getElementById("legend-speed").textContent = state.speed.toFixed(2);
       document.getElementById("legend-glow").textContent = state.glow.toFixed(2);
-      document.getElementById("terminal-density").textContent = `${state.density} nodes`;
-      document.getElementById("terminal-mode").textContent = `${state.cinematic ? "cinematic" : "editorial"} / ${state.profile}`;
+      const profileLabels = {
+        balanced: "バランス",
+        surge: "サージ",
+        pulse: "パルス",
+        night: "ナイト"
+      };
+
+      document.getElementById("terminal-density").textContent = `${state.density} ノード`;
+      document.getElementById("terminal-mode").textContent = `${state.cinematic ? "シネマティック" : "エディトリアル"} / ${profileLabels[state.profile]}`;
     }
 
     function updateScenario() {
       const { immersive, data, editorial } = state.flags;
       const textParts = [];
 
-      textParts.push("This static page behaves like");
-      textParts.push(immersive ? "a cinematic control room" : "a precise interface mock");
-      textParts.push(data ? "with dense telemetry" : "with restrained instrumentation");
-      textParts.push(editorial ? "and an editorial, narrative voice." : "and a direct systems-language tone.");
+      textParts.push("この静的ページは");
+      textParts.push(immersive ? "シネマティックな制御室のように振る舞い" : "精密なインターフェースモックのように振る舞い");
+      textParts.push(data ? "高密度のテレメトリを備え" : "抑制された計器表現にとどまり");
+      textParts.push(editorial ? "編集的で物語性のある語り口を持ちます。" : "システム寄りの直接的な語り口を持ちます。");
 
       const densityScore = Math.round(Math.min(96, 42 + state.density * 0.9 + (immersive ? 8 : 0)));
       const depthScore = Math.round(Math.min(94, 36 + state.speed * 38 + (data ? 16 : 4) + (editorial ? 6 : 0)));
@@ -1390,16 +1403,16 @@
       const confidence = Math.round((densityScore + depthScore + suitabilityScore) / 3);
 
       document.getElementById("scenario-text").textContent = textParts.join(" ");
-      document.getElementById("scenario-badge").textContent = `Profile confidence: ${confidence}%`;
+      document.getElementById("scenario-badge").textContent = `プロファイル信頼度: ${confidence}%`;
       document.getElementById("progress-density").style.width = `${densityScore}%`;
       document.getElementById("progress-depth").style.width = `${depthScore}%`;
       document.getElementById("progress-suitability").style.width = `${suitabilityScore}%`;
       document.getElementById("progress-density-label").textContent = `${densityScore}%`;
       document.getElementById("progress-depth-label").textContent = `${depthScore}%`;
       document.getElementById("progress-suitability-label").textContent = `${suitabilityScore}%`;
-      document.getElementById("state-value").textContent = editorial ? "Narrative" : "Reactive";
+      document.getElementById("state-value").textContent = editorial ? "物語型" : "反応型";
       document.getElementById("surface-value").textContent = immersive ? "Canvas + SVG" : "SVG + CSS";
-      document.getElementById("terminal-response").textContent = editorial ? "generated copy + staged reveal" : "adaptive motion + staged reveal";
+      document.getElementById("terminal-response").textContent = editorial ? "生成文 + 段階表示" : "適応モーション + 段階表示";
     }
 
     function syncButtons() {
@@ -1433,7 +1446,7 @@
         state.flags = { ...state.flags, ...(saved.flags || {}) };
         state.cinematic = saved.cinematic ?? state.cinematic;
       } catch (error) {
-        console.warn("Failed to restore state", error);
+        console.warn("状態の復元に失敗しました", error);
       }
     }
 
@@ -1442,7 +1455,7 @@
       speedRange.value = String(Math.round(state.speed * 100));
       glowRange.value = String(Math.round(state.glow * 100));
       document.body.dataset.mode = state.cinematic ? "cinematic" : "editorial";
-      modeButton.textContent = state.cinematic ? "Shift Atmosphere" : "Return to Cinematic";
+      modeButton.textContent = state.cinematic ? "雰囲気を切り替える" : "シネマティックに戻す";
     }
 
     function render() {
@@ -1459,7 +1472,7 @@
 
     function updateClock() {
       const now = new Date();
-      const parts = now.toLocaleTimeString("en-US", {
+      const parts = now.toLocaleTimeString("ja-JP", {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
