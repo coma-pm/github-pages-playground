@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Editor | GitHub Pages Playground</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6HSYY8Z3X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+    gtag("config", "G-P6HSYY8Z3X");
+  </script>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8f8f6;
+      --panel: #ffffff;
+      --line: #d8ddd6;
+      --text: #182019;
+      --muted: #5f6c61;
+      --accent: #1d6b4f;
+      --accent-strong: #14523b;
+      --output: #edf4ee;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Hiragino Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(120, 171, 146, 0.2), transparent 30%),
+        linear-gradient(180deg, #f6faf6 0%, #eff3ef 100%);
+    }
+
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .topbar a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .workspace {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: 0 20px 50px rgba(40, 60, 46, 0.08);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 320px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fcfdfb;
+      font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover,
+    button:focus-visible {
+      background: var(--accent-strong);
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    pre {
+      margin: 20px 0 0;
+      min-height: 140px;
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--output);
+      overflow-x: auto;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding-top: 24px;
+      }
+
+      .workspace {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topbar">
+      <a href="./index.html">Back to Index</a>
+    </div>
+
+    <h1>Python Editor</h1>
+    <p class="lead">
+      Python コードをブラウザ上で実行できます。
+    </p>
+
+    <section class="workspace">
+      <textarea id="code">print("Hello Pyodide")
+
+numbers = [1, 2, 3, 4, 5]
+
+print("sum =", sum(numbers))
+
+for i in range(3):
+    print("i =", i)</textarea>
+
+      <div class="actions">
+        <button onclick="runPython()">Run Python</button>
+        <div class="status" id="status">Loading Pyodide...</div>
+      </div>
+
+      <pre id="output"></pre>
+    </section>
+  </main>
+
+  <script type="module">
+    import { loadPyodide } from "https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.mjs";
+
+    const outputEl = document.getElementById("output");
+    const statusEl = document.getElementById("status");
+    const codeEl = document.getElementById("code");
+
+    function appendOutput(text) {
+      outputEl.textContent += text + "\n";
+    }
+
+    const pyodide = await loadPyodide();
+    statusEl.textContent = "Pyodide loaded";
+
+    pyodide.setStdout({
+      batched: (text) => {
+        appendOutput(text);
+      }
+    });
+
+    pyodide.setStderr({
+      batched: (text) => {
+        appendOutput(text);
+      }
+    });
+
+    window.runPython = async function () {
+      outputEl.textContent = "";
+
+      const code = codeEl.value;
+
+      try {
+        const result = await pyodide.runPythonAsync(code);
+
+        if (result !== undefined) {
+          appendOutput(String(result));
+        }
+      } catch (error) {
+        appendOutput(error);
+      }
+    };
+  </script>
+</body>
+</html>
