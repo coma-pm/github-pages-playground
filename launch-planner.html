@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Launch Planner | GitHub Pages Playground</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6HSYY8Z3X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+    gtag("config", "G-P6HSYY8Z3X");
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08111c;
+      --panel: rgba(9, 22, 34, 0.76);
+      --line: rgba(146, 199, 227, 0.16);
+      --text: #eef5ff;
+      --muted: #91a8bc;
+      --accent: #58d3b3;
+      --accent-2: #77b8ff;
+      --accent-soft: rgba(88, 211, 179, 0.12);
+      --shadow: 0 32px 90px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Avenir Next", "Hiragino Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 16%, rgba(83, 153, 255, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 10%, rgba(88, 211, 179, 0.14), transparent 24%),
+        linear-gradient(180deg, #08111c 0%, #091420 36%, #050b12 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(140, 193, 221, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(140, 193, 221, 0.045) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+      opacity: 0.55;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: min(1160px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 88px;
+    }
+
+    .topbar,
+    .topbar-nav,
+    .hero-actions,
+    .chip-row,
+    .button-row,
+    .status-row,
+    .timeline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .brand-pill,
+    .nav-link,
+    .button-primary,
+    .button-secondary,
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(8, 18, 28, 0.55);
+      color: var(--text);
+      text-decoration: none;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(20px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+    }
+
+    .button-primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(88, 211, 179, 0.95), rgba(119, 184, 255, 0.92));
+      color: #041018;
+      box-shadow: 0 14px 40px rgba(88, 211, 179, 0.2);
+    }
+
+    .button-secondary {
+      background: rgba(11, 25, 38, 0.68);
+    }
+
+    .brand-pill:hover,
+    .nav-link:hover,
+    .button-primary:hover,
+    .button-secondary:hover,
+    .chip:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero,
+    .panel,
+    .summary-card,
+    .timeline-card {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(10, 23, 35, 0.82), rgba(7, 16, 24, 0.84));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .hero {
+      padding: 34px;
+      display: grid;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--accent);
+      font-size: 0.84rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      max-width: 9ch;
+    }
+
+    .lead,
+    .muted,
+    label,
+    .field-note,
+    .checklist li,
+    .timeline-item p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      margin-top: 6px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 20px;
+    }
+
+    .panel,
+    .summary-card,
+    .timeline-card {
+      padding: 24px;
+    }
+
+    .panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .section-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.88rem;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(5, 11, 18, 0.8);
+      color: var(--text);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .chip {
+      min-height: 42px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      font-weight: 600;
+    }
+
+    .chip[aria-pressed="true"] {
+      border-color: rgba(88, 211, 179, 0.5);
+      background: rgba(88, 211, 179, 0.14);
+      color: #f3fffb;
+    }
+
+    .summary-card,
+    .timeline-card {
+      display: grid;
+      gap: 18px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(146, 199, 227, 0.1);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 2rem;
+      letter-spacing: -0.05em;
+      margin-bottom: 6px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(88, 211, 179, 0.2);
+      color: #eafff8;
+      font-size: 0.9rem;
+    }
+
+    .checklist {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .timeline-item {
+      display: grid;
+      gap: 8px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(146, 199, 227, 0.1);
+    }
+
+    .timeline-item strong {
+      font-size: 1.05rem;
+    }
+
+    @media (max-width: 900px) {
+      .layout,
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topbar">
+      <a class="brand-pill" href="./index.html">GitHub Pages Playground</a>
+      <div class="topbar-nav">
+        <a class="nav-link" href="./static-showcase.html">Launch Console</a>
+        <a class="nav-link" href="./timezone-planner.html">Time Zone Planner</a>
+        <a class="nav-link" href="./handoff-studio.html">Handoff Studio</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <p class="eyebrow">Shared Launch State</p>
+      <h1>Launch Planner</h1>
+      <p class="lead">
+        Capture the core launch inputs once, store them locally, and let the rest of the static suite reuse them across
+        time-zone planning and handoff generation.
+      </p>
+      <div class="hero-actions">
+        <a class="button-primary" href="./timezone-planner.html">Open Time Zone Planner</a>
+        <a class="button-secondary" href="./handoff-studio.html">Open Handoff Studio</a>
+      </div>
+    </section>
+
+    <section class="layout">
+      <section class="panel">
+        <div class="section-topline">
+          <span>Planner Inputs</span>
+          <span>Autosaves locally</span>
+        </div>
+
+        <div class="field-grid">
+          <label class="field">
+            <span>Launch name</span>
+            <input id="launch-name" type="text" />
+          </label>
+
+          <label class="field">
+            <span>Owner</span>
+            <input id="launch-owner" type="text" />
+          </label>
+
+          <label class="field full">
+            <span>Tagline</span>
+            <input id="launch-tagline" type="text" />
+          </label>
+
+          <label class="field">
+            <span>Launch date</span>
+            <input id="launch-date" type="date" />
+          </label>
+
+          <label class="field">
+            <span>Launch time</span>
+            <input id="launch-time" type="time" />
+          </label>
+
+          <label class="field">
+            <span>Launch time zone</span>
+            <select id="launch-timezone">
+              <option value="UTC">UTC</option>
+              <option value="America/Los_Angeles">San Francisco</option>
+              <option value="Europe/London">London</option>
+              <option value="Asia/Singapore">Singapore</option>
+              <option value="Asia/Tokyo">Tokyo</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Audience</span>
+            <input id="launch-audience" type="text" />
+          </label>
+
+          <label class="field full">
+            <span>Primary risk</span>
+            <textarea id="launch-risk"></textarea>
+          </label>
+
+          <label class="field full">
+            <span>Success metric</span>
+            <input id="launch-metric" type="text" />
+          </label>
+        </div>
+
+        <div class="field">
+          <span>Markets</span>
+          <div class="chip-row" id="market-chips"></div>
+        </div>
+
+        <div class="field">
+          <span>Channels</span>
+          <div class="chip-row" id="channel-chips"></div>
+        </div>
+
+        <div class="button-row">
+          <button class="button-primary" type="button" id="reset-button">Reset to Example</button>
+          <button class="button-secondary" type="button" id="copy-json-button">Copy Suite JSON</button>
+          <span class="field-note" id="save-status">Ready</span>
+        </div>
+      </section>
+
+      <section class="status-row" style="display:grid; gap:20px;">
+        <article class="summary-card">
+          <div class="section-topline">
+            <span>Launch Snapshot</span>
+            <span id="snapshot-date">No schedule</span>
+          </div>
+          <span class="status-badge" id="readiness-badge">Readiness 0%</span>
+          <div class="metric-grid">
+            <div class="metric">
+              <strong id="market-count">0</strong>
+              Active markets
+            </div>
+            <div class="metric">
+              <strong id="channel-count">0</strong>
+              Active channels
+            </div>
+            <div class="metric">
+              <strong id="days-left">--</strong>
+              Days remaining
+            </div>
+            <div class="metric">
+              <strong id="confidence-score">--</strong>
+              Launch score
+            </div>
+          </div>
+          <ul class="checklist" id="checklist"></ul>
+        </article>
+
+        <article class="timeline-card">
+          <div class="section-topline">
+            <span>Suggested Flow</span>
+            <span>Static but useful</span>
+          </div>
+          <div class="timeline" id="timeline"></div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "github-pages-playground.launch-suite";
+    const marketOptions = ["North America", "Europe", "Asia Pacific", "Latin America", "Middle East"];
+    const channelOptions = ["Homepage", "Docs", "Email", "Social", "Partner Kit"];
+    const defaultState = {
+      name: "Atlas 2.0",
+      owner: "Launch Operations",
+      tagline: "Ship once, launch everywhere.",
+      date: "2026-06-18",
+      time: "15:00",
+      timezone: "UTC",
+      audience: "Product teams and developers",
+      risk: "Regional copy may lag behind the primary launch window by 12 hours.",
+      metric: "Reach 35% of the weekly active audience within 24 hours.",
+      markets: ["North America", "Europe", "Asia Pacific"],
+      channels: ["Homepage", "Docs", "Email"]
+    };
+
+    const state = loadState();
+
+    const els = {
+      name: document.getElementById("launch-name"),
+      owner: document.getElementById("launch-owner"),
+      tagline: document.getElementById("launch-tagline"),
+      date: document.getElementById("launch-date"),
+      time: document.getElementById("launch-time"),
+      timezone: document.getElementById("launch-timezone"),
+      audience: document.getElementById("launch-audience"),
+      risk: document.getElementById("launch-risk"),
+      metric: document.getElementById("launch-metric"),
+      marketChips: document.getElementById("market-chips"),
+      channelChips: document.getElementById("channel-chips"),
+      saveStatus: document.getElementById("save-status"),
+      snapshotDate: document.getElementById("snapshot-date"),
+      readinessBadge: document.getElementById("readiness-badge"),
+      marketCount: document.getElementById("market-count"),
+      channelCount: document.getElementById("channel-count"),
+      daysLeft: document.getElementById("days-left"),
+      confidenceScore: document.getElementById("confidence-score"),
+      checklist: document.getElementById("checklist"),
+      timeline: document.getElementById("timeline"),
+      resetButton: document.getElementById("reset-button"),
+      copyJsonButton: document.getElementById("copy-json-button")
+    };
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        return { ...defaultState, ...saved };
+      } catch (error) {
+        console.warn("Failed to restore launch state", error);
+        return { ...defaultState };
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      els.saveStatus.textContent = "Saved locally";
+    }
+
+    function renderChips(container, options, values, key) {
+      container.innerHTML = "";
+
+      options.forEach((option) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "chip";
+        button.textContent = option;
+        button.setAttribute("aria-pressed", String(values.includes(option)));
+        button.addEventListener("click", () => {
+          const list = state[key];
+          const index = list.indexOf(option);
+
+          if (index >= 0) {
+            list.splice(index, 1);
+          } else {
+            list.push(option);
+          }
+
+          render();
+        });
+        container.append(button);
+      });
+    }
+
+    function getLaunchDateTime() {
+      if (!state.date || !state.time) {
+        return null;
+      }
+
+      return new Date(`${state.date}T${state.time}:00Z`);
+    }
+
+    function getReadiness() {
+      let score = 20;
+
+      if (state.name.trim()) score += 10;
+      if (state.tagline.trim()) score += 10;
+      if (state.owner.trim()) score += 10;
+      if (state.audience.trim()) score += 10;
+      if (state.markets.length >= 2) score += 15;
+      if (state.channels.length >= 2) score += 15;
+      if (state.risk.trim()) score += 10;
+
+      return Math.min(100, score);
+    }
+
+    function renderChecklist() {
+      const items = [
+        [state.name.trim().length > 0, "Launch name is defined."],
+        [state.tagline.trim().length > 0, "Core message is written."],
+        [state.markets.length >= 2, "At least two launch markets are selected."],
+        [state.channels.length >= 2, "At least two distribution channels are selected."],
+        [state.risk.trim().length > 0, "A launch risk is documented."],
+        [state.owner.trim().length > 0, "An owner is assigned."],
+        [state.metric.trim().length > 0, "A success metric is recorded."]
+      ];
+
+      els.checklist.innerHTML = "";
+      items.forEach(([done, label]) => {
+        const item = document.createElement("li");
+        item.textContent = `${done ? "Complete" : "Missing"}: ${label}`;
+        els.checklist.append(item);
+      });
+    }
+
+    function renderTimeline() {
+      const items = [
+        ["T-7 days", `Freeze hero copy for ${state.markets.slice(0, 2).join(" and ") || "priority markets"}.`],
+        ["T-3 days", `Prepare ${state.channels.slice(0, 2).join(" and ") || "channel"} publishing assets.`],
+        ["T-1 day", `Confirm ${state.owner || "the launch owner"} has the final sign-off path.`],
+        ["Launch day", `Publish "${state.name || "the release"}" and monitor the primary risk: ${state.risk || "No risk recorded yet."}`],
+        ["T+1 day", `Measure success against: ${state.metric || "No success metric recorded yet."}`]
+      ];
+
+      els.timeline.innerHTML = "";
+      items.forEach(([title, body]) => {
+        const article = document.createElement("article");
+        article.className = "timeline-item";
+        article.innerHTML = `<strong>${title}</strong><p>${body}</p>`;
+        els.timeline.append(article);
+      });
+    }
+
+    function render() {
+      els.name.value = state.name;
+      els.owner.value = state.owner;
+      els.tagline.value = state.tagline;
+      els.date.value = state.date;
+      els.time.value = state.time;
+      els.timezone.value = state.timezone;
+      els.audience.value = state.audience;
+      els.risk.value = state.risk;
+      els.metric.value = state.metric;
+
+      renderChips(els.marketChips, marketOptions, state.markets, "markets");
+      renderChips(els.channelChips, channelOptions, state.channels, "channels");
+
+      const readiness = getReadiness();
+      const launchDate = getLaunchDateTime();
+      const today = new Date();
+      const diffDays = launchDate ? Math.max(0, Math.ceil((launchDate - today) / 86400000)) : "--";
+
+      els.snapshotDate.textContent = launchDate ? `${state.date} ${state.time} (${state.timezone})` : "No schedule";
+      els.readinessBadge.textContent = `Readiness ${readiness}%`;
+      els.marketCount.textContent = String(state.markets.length);
+      els.channelCount.textContent = String(state.channels.length);
+      els.daysLeft.textContent = String(diffDays);
+      els.confidenceScore.textContent = `${Math.min(99, readiness + state.markets.length * 2)}%`;
+
+      renderChecklist();
+      renderTimeline();
+      saveState();
+    }
+
+    [
+      ["name", "name"],
+      ["owner", "owner"],
+      ["tagline", "tagline"],
+      ["date", "date"],
+      ["time", "time"],
+      ["timezone", "timezone"],
+      ["audience", "audience"],
+      ["risk", "risk"],
+      ["metric", "metric"]
+    ].forEach(([elKey, stateKey]) => {
+      els[elKey].addEventListener("input", (event) => {
+        state[stateKey] = event.target.value;
+        render();
+      });
+    });
+
+    els.resetButton.addEventListener("click", () => {
+      Object.assign(state, JSON.parse(JSON.stringify(defaultState)));
+      render();
+    });
+
+    els.copyJsonButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
+        els.saveStatus.textContent = "Suite JSON copied";
+      } catch (error) {
+        els.saveStatus.textContent = "Clipboard unavailable";
+        console.warn("Failed to copy suite JSON", error);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

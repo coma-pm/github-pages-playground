@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>静的ショーケース | GitHub Pages Playground</title>
+  <title>Global Launch Console | GitHub Pages Playground</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6HSYY8Z3X"></script>
@@ -667,6 +667,13 @@
       margin-top: 10px;
     }
 
+    .lab-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
     .lab-output {
       padding: 18px;
       border-radius: 22px;
@@ -846,53 +853,52 @@
     <div class="topbar reveal">
       <a class="brand-pill" href="./index.html">GitHub Pages Playground</a>
       <div class="topbar-nav">
-        <a class="back-link" href="./python-editor.html">Pythonエディタ</a>
-        <a class="nav-pill" href="#controls">調整する <span>ローカル操作のみ</span></a>
-        <a class="nav-pill" href="#story">マップを見る <span>SVG とモーション</span></a>
-        <button class="mode-button" type="button" id="mode-button">雰囲気を切り替える</button>
+        <a class="back-link" href="./launch-planner.html">Launch Planner</a>
+        <a class="nav-pill" href="./timezone-planner.html">Time Zone Planner <span>Shared launch window</span></a>
+        <a class="nav-pill" href="./handoff-studio.html">Handoff Studio <span>Copyable markdown</span></a>
+        <button class="mode-button" type="button" id="mode-button">Shift Atmosphere</button>
       </div>
     </div>
 
     <section class="hero">
       <article class="hero-copy reveal">
         <div>
-          <p class="eyebrow">静的 Web 限界テスト</p>
-          <h1>1枚の HTML はどこまでリッチになれるか</h1>
-          <p class="lead">
-            サーバーなし、ビルドなし、フレームワーク実行基盤なし。それでもこのページは、アニメーション背景、
-            状態を持つコントロール、SVG シーン構成、モーション、動的に生成される文言、そしてブラウザ内で
-            形を変えるダッシュボードをあえて詰め込んだ静的実験です。
+          <p class="eyebrow">Practical Static Demo</p>
+          <h1>Global Launch Console</h1>
+          <p class="lead" id="suite-summary">
+            No server, no build step, no framework runtime. This single HTML file helps a distributed team shape a
+            launch plan, compare time zones, generate a handoff brief, and still feel dramatically rich on first load.
           </p>
         </div>
 
         <div class="hero-actions">
-          <a class="button-primary" href="#controls">コントロールを開く</a>
-          <a class="button-secondary" href="#lab">シナリオを組み立てる</a>
+          <a class="button-primary" href="./launch-planner.html">Open Launch Planner</a>
+          <a class="button-secondary" href="./handoff-studio.html">Generate a Brief</a>
         </div>
 
         <div class="stats-row">
           <div class="stat">
-            <span class="stat-label">通信</span>
-            <span class="stat-value">0 リクエスト</span>
-            <p class="stat-note">初回読み込み後の操作はすべてクライアント側で完結します。</p>
+            <span class="stat-label">Runtime APIs</span>
+            <span class="stat-value">0 calls</span>
+            <p class="stat-note">After first load, every interaction remains client-side.</p>
           </div>
           <div class="stat">
-            <span class="stat-label">描画層</span>
+            <span class="stat-label">Toolkit</span>
             <span class="stat-value" id="surface-value">Canvas + SVG</span>
-            <p class="stat-note">単一の静的ドキュメントに 2 つの描画レイヤーを重ねています。</p>
+            <p class="stat-note">Visual depth, live clocks, and generated output in one static document.</p>
           </div>
           <div class="stat">
-            <span class="stat-label">状態</span>
-            <span class="stat-value" id="state-value">反応型</span>
-            <p class="stat-note">スライダー、トグル、カウンター、生成文言が連動します。</p>
+            <span class="stat-label">Output</span>
+            <span class="stat-value" id="state-value">Live brief</span>
+            <p class="stat-note">Inputs drive timing, copy, confidence, and exportable launch notes.</p>
           </div>
         </div>
       </article>
 
       <aside class="hero-panel reveal">
         <div class="panel-topline">
-          <span>信号コア</span>
-          <span class="mini-label"><span class="live-dot"></span> 稼働中</span>
+          <span>Launch Pulse</span>
+          <span class="mini-label"><span class="live-dot"></span> Live</span>
         </div>
 
         <div class="panel-visual">
@@ -908,10 +914,10 @@
         </div>
 
         <div class="mini-terminal" aria-live="polite">
-          <div class="terminal-line"><strong>mode</strong><span id="terminal-mode">シネマティック / バランス</span></div>
-          <div class="terminal-line"><strong>density</strong><span id="terminal-density">44 ノード</span></div>
-          <div class="terminal-line"><strong>response</strong><span id="terminal-response">適応モーション + 段階表示</span></div>
-          <div class="terminal-line"><strong>clock</strong><span id="clock-inline">--:--:--</span></div>
+          <div class="terminal-line"><strong>posture</strong><span id="terminal-mode">cinematic / launch</span></div>
+          <div class="terminal-line"><strong>coverage</strong><span id="terminal-density">4 launch regions</span></div>
+          <div class="terminal-line"><strong>output</strong><span id="terminal-response">generated brief + time zones</span></div>
+          <div class="terminal-line"><strong>local now</strong><span id="clock-inline">--:--:--</span></div>
         </div>
       </aside>
     </section>
@@ -919,31 +925,66 @@
     <section class="section-card reveal">
       <div class="section-heading">
         <div class="section-topline">
-          <span>表現力</span>
-          <span>単一ファイル、高密度</span>
+          <span>Launch Suite</span>
+          <span>Three practical tools</span>
         </div>
-        <h2>静的でも平坦とは限らない</h2>
+        <h2>Split the work, keep the shared state</h2>
         <p>
-          GitHub Pages の素朴な静的配信でも、設計を詰めれば、レイヤー化したモーション、ダッシュボード風の構成、
-          反応型コントロール、ローカル保存、磨かれた視覚リズムまで実現できます。
+          The console is the public-facing hub. The actual practical work now lives in dedicated static pages that reuse
+          the same locally stored launch data.
         </p>
       </div>
 
       <div class="feature-grid">
         <article class="feature-card">
           <div class="feature-icon">01</div>
-          <h3>シーン描画</h3>
-          <p>Canvas の粒子と接続線で、バックエンドや WebGL なしでも奥行きを作れます。</p>
+          <h3>Launch Planner</h3>
+          <p>Set the launch name, owner, markets, channels, timing, and primary risk in one place.</p>
+          <a class="button-secondary" href="./launch-planner.html">Open Planner</a>
         </article>
         <article class="feature-card">
           <div class="feature-icon">02</div>
-          <h3>反応型 UI</h3>
-          <p>素のブラウザ API だけで、見た目、数値、生成文、バー表示をリアルタイム更新します。</p>
+          <h3>Time Zone Planner</h3>
+          <p>Compare the same launch window across San Francisco, New York, London, Berlin, Singapore, and Tokyo.</p>
+          <a class="button-secondary" href="./timezone-planner.html">Open Scheduler</a>
         </article>
         <article class="feature-card">
           <div class="feature-icon">03</div>
-          <h3>演出的な構成</h3>
-          <p>SVG の経路、時間差表示、段階的なセクションによって、文書より体験に近い読み味を作れます。</p>
+          <h3>Handoff Studio</h3>
+          <p>Generate a markdown brief from the shared launch state and copy it directly into team workflows.</p>
+          <a class="button-secondary" href="./handoff-studio.html">Open Studio</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-card reveal">
+      <div class="section-heading">
+        <div class="section-topline">
+          <span>Useful Surface</span>
+          <span>Single file, practical payoff</span>
+        </div>
+        <h2>Static can still feel operational</h2>
+        <p>
+          A plain static deployment can still coordinate real launch work: rollout timing, visual hierarchy, generated
+          notes, local persistence, and a polished interface that does not collapse into a generic brochure.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">01</div>
+          <h3>Rollout Planning</h3>
+          <p>Visual controls reshape a launch mix that feels closer to an operator dashboard than a static landing page.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">02</div>
+          <h3>Exportable Output</h3>
+          <p>Generated briefs and confidence readouts turn visual interaction into something a team could actually reuse.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">03</div>
+          <h3>Portable Delivery</h3>
+          <p>The full experience ships as a static asset, making it cheap to host, easy to mirror, and globally accessible.</p>
         </article>
       </div>
     </section>
@@ -951,67 +992,67 @@
     <section class="section-card reveal" id="controls">
       <div class="section-heading">
         <div class="section-topline">
-          <span>コントロールデッキ</span>
-          <span>入力でページが変化</span>
+          <span>Launch Inputs</span>
+          <span>Adjust the plan</span>
         </div>
-        <h2>インターフェースをさらに押し込む</h2>
+        <h2>Shape a launch without a backend</h2>
         <p>
-          下の操作で、背景フィールドの密度、モーション速度、発光の強さ、ダッシュボードのプロファイルが変化します。
-          すべて単一の静的ドキュメント内で完結します。
+          The inputs below reshape visual intensity, inferred coverage, and the final launch brief. The same client-side
+          state updates charts, labels, recommendations, and copy without a single server request.
         </p>
       </div>
 
       <div class="control-grid">
         <article class="chart-card">
           <div class="panel-topline">
-            <span>信号ヒストグラム</span>
-            <span id="histogram-label">プロファイル: バランス</span>
+            <span>Channel Mix</span>
+            <span id="histogram-label">Posture: Launch</span>
           </div>
           <div class="signal-grid" id="signal-grid" aria-hidden="true"></div>
           <div class="legend-list">
             <div class="legend-item">
-              <strong id="legend-density">44</strong>
-              粒子密度
+              <strong id="legend-density">4</strong>
+              Markets covered
             </div>
             <div class="legend-item">
-              <strong id="legend-speed">0.70</strong>
-              モーション速度
+              <strong id="legend-speed">70%</strong>
+              Launch tempo
             </div>
             <div class="legend-item">
-              <strong id="legend-glow">0.68</strong>
-              発光強度
+              <strong id="legend-glow">68%</strong>
+              Visual energy
             </div>
           </div>
         </article>
 
         <article class="lab-card">
           <div class="panel-topline">
-            <span>操作入力</span>
-            <span>ローカル状態</span>
+            <span>Planner Inputs</span>
+            <span>Stored locally</span>
           </div>
 
           <div class="control-stack">
             <div class="sliders">
               <label class="slider-group" for="density-range">
                 <div class="slider-row">
-                  <span>粒子密度</span>
-                  <strong id="density-output">44</strong>
+                  <span>Market Coverage</span>
+                  <strong id="density-output">4 regions</strong>
                 </div>
                 <input id="density-range" type="range" min="18" max="88" value="44" />
               </label>
 
               <label class="slider-group" for="speed-range">
                 <div class="slider-row">
-                  <span>モーション速度</span>
-                  <strong id="speed-output">0.70</strong>
+                  <span>Launch Tempo</span>
+                  <strong id="speed-output">70%</strong>
                 </div>
                 <input id="speed-range" type="range" min="20" max="140" value="70" />
               </label>
 
               <label class="slider-group" for="glow-range">
                 <div class="slider-row">
-                  <span>発光強度</span>
-                  <strong id="glow-output">0.68</strong>
+                  <span>Visual Energy</span>
+                  <strong id="glow-output">68%</strong>
                 </div>
                 <input id="glow-range" type="range" min="20" max="100" value="68" />
               </label>
@@ -1019,20 +1060,20 @@
 
             <div>
               <div class="panel-topline">
-                <span>雰囲気プロファイル</span>
-                <span>プリセット曲線</span>
+                <span>Page Posture</span>
+                <span>Preset mix</span>
               </div>
               <div class="chip-row" id="profile-buttons">
-                <button class="toggle-chip" type="button" data-profile="balanced" aria-pressed="true">バランス</button>
-                <button class="toggle-chip" type="button" data-profile="surge" aria-pressed="false">サージ</button>
-                <button class="toggle-chip" type="button" data-profile="pulse" aria-pressed="false">パルス</button>
-                <button class="toggle-chip" type="button" data-profile="night" aria-pressed="false">ナイト</button>
+                <button class="toggle-chip" type="button" data-profile="balanced" aria-pressed="true">Launch</button>
+                <button class="toggle-chip" type="button" data-profile="surge" aria-pressed="false">Product</button>
+                <button class="toggle-chip" type="button" data-profile="pulse" aria-pressed="false">Campaign</button>
+                <button class="toggle-chip" type="button" data-profile="night" aria-pressed="false">Docs</button>
               </div>
             </div>
 
             <p class="control-note">
-              これは静的ホスティングの現実的な上限テストです。相当量の表示ロジック、モーション、状態管理を持ちながら、
-              配布物は単なる HTML ファイルのままです。
+              This is the real ceiling test for static hosting: useful planning state, presentational depth, and reusable
+              output, all shipped as one HTML file.
             </p>
           </div>
         </article>
@@ -1042,12 +1083,13 @@
     <section class="section-card reveal" id="story">
       <div class="section-heading">
         <div class="section-topline">
-          <span>物語レイヤー</span>
-          <span>SVG + CSS モーション</span>
+          <span>World Timing</span>
+          <span>SVG + live clocks</span>
         </div>
-        <h2>ベクター構成だけでも場面は成立する</h2>
+        <h2>Follow-the-sun planning can live in static HTML</h2>
         <p>
-          下のマップは単なるインライン SVG と CSS ですが、平面的な図ではなく、空間的な制御インターフェースとして読めます。
+          A static page can still help a distributed team coordinate when people in San Francisco, London, and Singapore
+          are seeing the same launch window.
         </p>
       </div>
 
@@ -1057,7 +1099,7 @@
             <div class="mesh"></div>
             <div class="beam"></div>
             <div class="story-map">
-              <svg viewBox="0 0 700 420" role="img" aria-label="抽象的な信号ルートマップ">
+              <svg viewBox="0 0 700 420" role="img" aria-label="Abstract global launch route map">
                 <defs>
                   <linearGradient id="routeA" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#77b8ff" />
@@ -1089,9 +1131,9 @@
                   <circle cx="612" cy="134" r="6" />
                 </g>
                 <g fill="#91a8bc" font-family="IBM Plex Mono, monospace" font-size="16">
-                  <text x="64" y="338">起点</text>
-                  <text x="316" y="124">中継</text>
-                  <text x="576" y="194">出力</text>
+                  <text x="42" y="338">San Francisco</text>
+                  <text x="304" y="124">London</text>
+                  <text x="556" y="194">Singapore</text>
                 </g>
               </svg>
             </div>
@@ -1099,33 +1141,34 @@
 
           <div class="story-meta">
             <div class="meta-box">
-              <strong>SVG</strong>
-              解像度に依存せず、インラインで演出調整しやすい形式です。
+              <strong id="city-sf">--:--</strong>
+              San Francisco
             </div>
             <div class="meta-box">
-              <strong>CSS</strong>
-              モーション、発光、走査線、奥行き表現を素直に重ねられます。
+              <strong id="city-london">--:--</strong>
+              London
             </div>
             <div class="meta-box">
-              <strong>HTML</strong>
-              説明文やデータラベルを、アクセシブルかつ検索可能なまま維持できます。
+              <strong id="city-singapore">--:--</strong>
+              Singapore
             </div>
           </div>
         </article>
 
         <article class="story-card">
           <div class="panel-topline">
-            <span>読み取り結果</span>
-            <span>このページが示すこと</span>
+            <span>Recommended Window</span>
+            <span>Generated locally</span>
           </div>
-          <h3>静的サイトの実用的な限界</h3>
+          <h3>Launch guidance</h3>
           <p>
-            静的ホスティングが苦しくなるのは、秘匿データ、複数ユーザーで共有する状態、サーバー級の計算が必要なときです。
-            一方で、強いビジュアル、反応の良いダッシュボード、演出的な遷移、濃いローカル操作は十分に実現できます。
+            Static hosting becomes awkward when you need secret data, shared multi-user state, or server-grade compute.
+            It does not become awkward when you want launch planning, strong visual presence, responsive inputs, and an
+            exportable handoff note.
           </p>
-          <p>
-            つまり、静的サイトの上限は「単純な紹介ページ」よりずっと高いということです。制約になるのは見た目ではなく、
-            永続化、秘匿性、計算資源の所在です。
+          <p id="guidance-text">
+            Best when the page acts like a self-contained control room: fast to host, easy to mirror, and useful before
+            anyone opens a spreadsheet.
           </p>
         </article>
       </div>
@@ -1134,57 +1177,61 @@
     <section class="section-card reveal" id="lab">
       <div class="section-heading">
         <div class="section-topline">
-          <span>シナリオラボ</span>
-          <span>トグルから生成</span>
+          <span>Launch Brief</span>
+          <span>Generated from toggles</span>
         </div>
-        <h2>説明文すら動的に変えられる</h2>
+        <h2>Produce something a team could actually use</h2>
         <p>
-          これらのトグルは、下の説明文と能力バーの構成を組み替えます。やっていることは静的配信のまま、
-          クライアント側の状態管理と表示ロジックだけです。
+          These switches recompute the copy, confidence badge, readiness bars, and export text below. The page remains a
+          static deployment, but the output is operational rather than decorative.
         </p>
       </div>
 
       <div class="lab-grid">
         <article class="lab-card">
           <div class="panel-topline">
-            <span>シナリオフラグ</span>
-            <span>3つのローカルトグル</span>
+            <span>Brief Options</span>
+            <span>3 local toggles</span>
           </div>
           <div class="toggle-cluster">
-            <button class="toggle-chip" type="button" data-flag="immersive" aria-pressed="true">没入感ある動き</button>
-            <button class="toggle-chip" type="button" data-flag="data" aria-pressed="true">高密度テレメトリ</button>
-            <button class="toggle-chip" type="button" data-flag="editorial" aria-pressed="false">編集的トーン</button>
+            <button class="toggle-chip" type="button" data-flag="multilingual" aria-pressed="true">Multilingual Copy</button>
+            <button class="toggle-chip" type="button" data-flag="offline" aria-pressed="true">Offline-first Assets</button>
+            <button class="toggle-chip" type="button" data-flag="analytics" aria-pressed="false">Analytics-ready Handoff</button>
           </div>
           <p class="control-note">
-            結果エリアでは、説明文、信頼度バッジ、小さな能力モデルが更新されます。ネットワークも、テンプレートエンジンも、
-            サーバー関数も不要です。
+            The result area updates its summary, confidence, timing guidance, and copyable handoff. No API calls, no
+            template engine, no server function.
           </p>
         </article>
 
         <article class="lab-output">
-          <span class="output-badge" id="scenario-badge">プロファイル信頼度: 84%</span>
+          <span class="output-badge" id="scenario-badge">Launch confidence: 84%</span>
           <p class="output-text" id="scenario-text">
-            この静的ページは、シネマティックな制御室のように振る舞います。アニメーションし、情報量が多く、
-            単一のホスト済みドキュメントとしては驚くほど反応的です。
+            This static launch console feels like a practical control room: globally aware, visually rich, and ready to
+            hand a team a next step instead of just a mood board.
           </p>
+          <div class="lab-actions">
+            <button class="button-secondary" type="button" id="copy-brief-button">Copy Launch Brief</button>
+            <span class="control-note" id="copy-brief-status">Ready to export</span>
+          </div>
           <div class="progress-list">
             <div class="progress-row">
               <div class="slider-row">
-                <span>視覚密度</span>
+                <span>Message Clarity</span>
                 <strong id="progress-density-label">82%</strong>
               </div>
               <div class="progress-bar"><div class="progress-fill" id="progress-density"></div></div>
             </div>
             <div class="progress-row">
               <div class="slider-row">
-                <span>操作の深さ</span>
+                <span>Operational Readiness</span>
                 <strong id="progress-depth-label">78%</strong>
               </div>
               <div class="progress-bar"><div class="progress-fill" id="progress-depth"></div></div>
             </div>
             <div class="progress-row">
               <div class="slider-row">
-                <span>静的適性</span>
+                <span>Static-site Fit</span>
                 <strong id="progress-suitability-label">91%</strong>
               </div>
               <div class="progress-bar"><div class="progress-fill" id="progress-suitability"></div></div>
@@ -1196,7 +1243,7 @@
 
     <div class="footer-row reveal">
       <p class="footer-note">
-        さらに先へ進めるなら、次の上限はたいてい WebAssembly、オフライン保存、外部 API の連携です。
+        If you want to push further after this, the next ceilings are usually external APIs, shared persistence, and heavier compute.
       </p>
       <div class="clock" id="footer-clock">--:--:--</div>
     </div>
@@ -1204,6 +1251,7 @@
 
   <script>
     const STORAGE_KEY = "github-pages-playground.static-showcase.state";
+    const SUITE_STORAGE_KEY = "github-pages-playground.launch-suite";
     const canvas = document.getElementById("scene");
     const context = canvas.getContext("2d");
     const densityRange = document.getElementById("density-range");
@@ -1214,6 +1262,9 @@
     const signalGrid = document.getElementById("signal-grid");
     const modeButton = document.getElementById("mode-button");
     const revealTargets = [...document.querySelectorAll(".reveal")];
+    const copyBriefButton = document.getElementById("copy-brief-button");
+    const copyBriefStatus = document.getElementById("copy-brief-status");
+    const suiteSummary = document.getElementById("suite-summary");
 
     const state = {
       density: 44,
@@ -1221,12 +1272,13 @@
       glow: 0.68,
       profile: "balanced",
       flags: {
-        immersive: true,
-        data: true,
-        editorial: false
+        multilingual: true,
+        offline: true,
+        analytics: false
       },
       cinematic: true
     };
+    let suiteState = loadSuiteState();
 
     const profileShapes = {
       balanced: [42, 50, 58, 66, 62, 74, 78, 70, 64, 56, 48, 44],
@@ -1347,6 +1399,28 @@
       document.documentElement.style.setProperty("--glow", state.glow.toFixed(2));
     }
 
+    function getProfileLabels() {
+      return {
+        balanced: "Launch",
+        surge: "Product",
+        pulse: "Campaign",
+        night: "Docs"
+      };
+    }
+
+    function getMarketCount() {
+      return Math.max(2, Math.min(8, Math.round(state.density / 11)));
+    }
+
+    function loadSuiteState() {
+      try {
+        return JSON.parse(localStorage.getItem(SUITE_STORAGE_KEY) || "{}");
+      } catch (error) {
+        console.warn("Failed to restore launch suite state", error);
+        return {};
+      }
+    }
+
     function updateHistogram() {
       const shape = profileShapes[state.profile];
       const bars = [...signalGrid.children];
@@ -1360,59 +1434,64 @@
         bar.style.height = `${heightPercent}%`;
       });
 
-      const profileLabels = {
-        balanced: "バランス",
-        surge: "サージ",
-        pulse: "パルス",
-        night: "ナイト"
-      };
-
-      document.getElementById("histogram-label").textContent = `プロファイル: ${profileLabels[state.profile]}`;
+      const profileLabels = getProfileLabels();
+      document.getElementById("histogram-label").textContent = `Posture: ${profileLabels[state.profile]}`;
     }
 
     function updateReadouts() {
-      document.getElementById("density-output").textContent = String(state.density);
-      document.getElementById("speed-output").textContent = state.speed.toFixed(2);
-      document.getElementById("glow-output").textContent = state.glow.toFixed(2);
-      document.getElementById("legend-density").textContent = String(state.density);
-      document.getElementById("legend-speed").textContent = state.speed.toFixed(2);
-      document.getElementById("legend-glow").textContent = state.glow.toFixed(2);
-      const profileLabels = {
-        balanced: "バランス",
-        surge: "サージ",
-        pulse: "パルス",
-        night: "ナイト"
-      };
+      const profileLabels = getProfileLabels();
+      const marketCount = suiteState.markets?.length || getMarketCount();
+      const channelCount = suiteState.channels?.length || 3;
+      const speedPercent = `${Math.round(state.speed * 100)}%`;
+      const glowPercent = `${Math.round(state.glow * 100)}%`;
 
-      document.getElementById("terminal-density").textContent = `${state.density} ノード`;
-      document.getElementById("terminal-mode").textContent = `${state.cinematic ? "シネマティック" : "エディトリアル"} / ${profileLabels[state.profile]}`;
+      document.getElementById("density-output").textContent = `${marketCount} regions`;
+      document.getElementById("speed-output").textContent = speedPercent;
+      document.getElementById("glow-output").textContent = glowPercent;
+      document.getElementById("legend-density").textContent = String(marketCount);
+      document.getElementById("legend-speed").textContent = `${channelCount} channels`;
+      document.getElementById("legend-glow").textContent = glowPercent;
+      document.getElementById("terminal-density").textContent = `${marketCount} launch regions`;
+      document.getElementById("terminal-mode").textContent = `${state.cinematic ? "cinematic" : "editorial"} / ${profileLabels[state.profile]}`;
+      suiteSummary.textContent =
+        suiteState.name && suiteState.owner
+          ? `${suiteState.name} is currently owned by ${suiteState.owner}, targets ${marketCount} regions, and can move from planning to handoff without leaving static hosting.`
+          : "No server, no build step, no framework runtime. This single HTML file helps a distributed team shape a launch plan, compare time zones, generate a handoff brief, and still feel dramatically rich on first load.";
     }
 
     function updateScenario() {
-      const { immersive, data, editorial } = state.flags;
+      const { multilingual, offline, analytics } = state.flags;
+      const marketCount = suiteState.markets?.length || getMarketCount();
+      const channelCount = suiteState.channels?.length || 2;
+      const owner = suiteState.owner || "the launch owner";
+      const launchName = suiteState.name || "the release";
       const textParts = [];
 
-      textParts.push("この静的ページは");
-      textParts.push(immersive ? "シネマティックな制御室のように振る舞い" : "精密なインターフェースモックのように振る舞い");
-      textParts.push(data ? "高密度のテレメトリを備え" : "抑制された計器表現にとどまり");
-      textParts.push(editorial ? "編集的で物語性のある語り口を持ちます。" : "システム寄りの直接的な語り口を持ちます。");
+      textParts.push(`${launchName} covers ${marketCount} launch regions,`);
+      textParts.push(multilingual ? "prioritizes multilingual message handoff," : "keeps the message set intentionally compact,");
+      textParts.push(offline ? "assumes offline-first assets for resilience," : "leans on lighter hosted assets for speed,");
+      textParts.push(analytics ? "and includes an analytics-ready handoff for the team." : "and stays lightweight enough for fast static deployment.");
 
-      const densityScore = Math.round(Math.min(96, 42 + state.density * 0.9 + (immersive ? 8 : 0)));
-      const depthScore = Math.round(Math.min(94, 36 + state.speed * 38 + (data ? 16 : 4) + (editorial ? 6 : 0)));
-      const suitabilityScore = Math.round(Math.max(56, 98 - (immersive ? 7 : 0) - (data ? 4 : 0) - (editorial ? 2 : 0)));
-      const confidence = Math.round((densityScore + depthScore + suitabilityScore) / 3);
+      const clarityScore = Math.round(Math.min(96, 46 + marketCount * 5 + (multilingual ? 10 : 2) + (state.profile === "night" ? 6 : 0)));
+      const readinessScore = Math.round(Math.min(94, 34 + state.speed * 38 + (offline ? 15 : 4) + (analytics ? 12 : 0) + channelCount * 2));
+      const suitabilityScore = Math.round(Math.max(58, 98 - (analytics ? 7 : 0) - (offline ? 3 : 0) + (state.profile === "balanced" ? 2 : 0)));
+      const confidence = Math.round((clarityScore + readinessScore + suitabilityScore) / 3);
 
       document.getElementById("scenario-text").textContent = textParts.join(" ");
-      document.getElementById("scenario-badge").textContent = `プロファイル信頼度: ${confidence}%`;
-      document.getElementById("progress-density").style.width = `${densityScore}%`;
-      document.getElementById("progress-depth").style.width = `${depthScore}%`;
+      document.getElementById("scenario-badge").textContent = `Launch confidence: ${confidence}%`;
+      document.getElementById("progress-density").style.width = `${clarityScore}%`;
+      document.getElementById("progress-depth").style.width = `${readinessScore}%`;
       document.getElementById("progress-suitability").style.width = `${suitabilityScore}%`;
-      document.getElementById("progress-density-label").textContent = `${densityScore}%`;
-      document.getElementById("progress-depth-label").textContent = `${depthScore}%`;
+      document.getElementById("progress-density-label").textContent = `${clarityScore}%`;
+      document.getElementById("progress-depth-label").textContent = `${readinessScore}%`;
       document.getElementById("progress-suitability-label").textContent = `${suitabilityScore}%`;
-      document.getElementById("state-value").textContent = editorial ? "物語型" : "反応型";
-      document.getElementById("surface-value").textContent = immersive ? "Canvas + SVG" : "SVG + CSS";
-      document.getElementById("terminal-response").textContent = editorial ? "生成文 + 段階表示" : "適応モーション + 段階表示";
+      document.getElementById("state-value").textContent = analytics ? "Exportable" : "Live brief";
+      document.getElementById("surface-value").textContent = offline ? "Canvas + SVG" : "SVG + CSS";
+      document.getElementById("terminal-response").textContent = analytics ? "brief + timing + handoff" : "brief + timing + motion";
+      document.getElementById("guidance-text").textContent =
+        marketCount >= 6
+          ? `Recommended for broad releases: let ${owner} stage the hero message first, then let regional teams localize the rest.`
+          : `Recommended for focused releases: keep the core page sharp, then use the brief below as the handoff layer for ${owner}.`;
     }
 
     function syncButtons() {
@@ -1446,7 +1525,7 @@
         state.flags = { ...state.flags, ...(saved.flags || {}) };
         state.cinematic = saved.cinematic ?? state.cinematic;
       } catch (error) {
-        console.warn("状態の復元に失敗しました", error);
+        console.warn("Failed to restore state", error);
       }
     }
 
@@ -1455,10 +1534,33 @@
       speedRange.value = String(Math.round(state.speed * 100));
       glowRange.value = String(Math.round(state.glow * 100));
       document.body.dataset.mode = state.cinematic ? "cinematic" : "editorial";
-      modeButton.textContent = state.cinematic ? "雰囲気を切り替える" : "シネマティックに戻す";
+      modeButton.textContent = state.cinematic ? "Shift Atmosphere" : "Return to Cinematic";
+    }
+
+    function buildBriefText() {
+      const profileLabels = getProfileLabels();
+      const marketCount = getMarketCount();
+      const scenario = document.getElementById("scenario-text").textContent;
+      const citySf = document.getElementById("city-sf").textContent;
+      const cityLondon = document.getElementById("city-london").textContent;
+      const citySingapore = document.getElementById("city-singapore").textContent;
+
+      return [
+        "Global Launch Brief",
+        `Launch: ${suiteState.name || "Untitled launch"}`,
+        `Owner: ${suiteState.owner || "Unassigned"}`,
+        `Posture: ${profileLabels[state.profile]}`,
+        `Coverage: ${marketCount} regions`,
+        `Channels: ${(suiteState.channels || []).join(", ") || "Not set"}`,
+        `Launch tempo: ${Math.round(state.speed * 100)}%`,
+        `Visual energy: ${Math.round(state.glow * 100)}%`,
+        `Time zones: San Francisco ${citySf}, London ${cityLondon}, Singapore ${citySingapore}`,
+        `Notes: ${scenario}`
+      ].join("\n");
     }
 
     function render() {
+      suiteState = loadSuiteState();
       applyTheme();
       setRootVariables();
       syncParticles();
@@ -1467,20 +1569,31 @@
       updateScenario();
       syncButtons();
       syncInputs();
+      copyBriefStatus.textContent = "Ready to export";
       persistState();
     }
 
     function updateClock() {
       const now = new Date();
-      const parts = now.toLocaleTimeString("ja-JP", {
+      const parts = now.toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
         hour12: false,
         timeZoneName: "short"
       });
+      const cityFormat = (timeZone) => now.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone
+      });
+
       document.getElementById("clock-inline").textContent = parts;
       document.getElementById("footer-clock").textContent = parts;
+      document.getElementById("city-sf").textContent = cityFormat("America/Los_Angeles");
+      document.getElementById("city-london").textContent = cityFormat("Europe/London");
+      document.getElementById("city-singapore").textContent = cityFormat("Asia/Singapore");
     }
 
     function initializeReveal() {
@@ -1531,6 +1644,24 @@
     modeButton.addEventListener("click", () => {
       state.cinematic = !state.cinematic;
       render();
+    });
+
+    copyBriefButton.addEventListener("click", async () => {
+      const brief = buildBriefText();
+
+      try {
+        await navigator.clipboard.writeText(brief);
+        copyBriefStatus.textContent = "Launch brief copied";
+      } catch (error) {
+        copyBriefStatus.textContent = "Clipboard unavailable";
+        console.warn("Failed to copy launch brief", error);
+      }
+    });
+
+    window.addEventListener("storage", (event) => {
+      if (event.key === SUITE_STORAGE_KEY) {
+        render();
+      }
     });
 
     window.addEventListener("resize", resizeCanvas);
