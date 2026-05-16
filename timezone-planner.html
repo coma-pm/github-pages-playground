@@ -1,321 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Time Zone Planner | GitHub Pages Playground</title>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6HSYY8Z3X"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag("js", new Date());
-    gtag("config", "G-P6HSYY8Z3X");
-  </script>
-
-  <style>
-    :root {
-      color-scheme: dark;
-      --line: rgba(146, 199, 227, 0.16);
-      --text: #eef5ff;
-      --muted: #91a8bc;
-      --accent: #58d3b3;
-      --panel: rgba(9, 22, 34, 0.76);
-      --shadow: 0 32px 90px rgba(0, 0, 0, 0.38);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Space Grotesk", "Avenir Next", "Hiragino Sans", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 18% 16%, rgba(83, 153, 255, 0.18), transparent 28%),
-        radial-gradient(circle at 82% 10%, rgba(88, 211, 179, 0.14), transparent 24%),
-        linear-gradient(180deg, #08111c 0%, #091420 36%, #050b12 100%);
-    }
-    main {
-      width: min(1160px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 24px 0 88px;
-    }
-    .topbar, .topbar-nav, .hero-actions, .toolbar {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .topbar { justify-content: space-between; margin-bottom: 28px; }
-    .pill, .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(8, 18, 28, 0.55);
-      color: var(--text);
-      text-decoration: none;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .button.primary {
-      border-color: transparent;
-      background: linear-gradient(135deg, rgba(88, 211, 179, 0.95), rgba(119, 184, 255, 0.92));
-      color: #041018;
-    }
-    .hero, .panel, .clock-card, .overlap-card {
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(10, 23, 35, 0.82), rgba(7, 16, 24, 0.84));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(22px);
-    }
-    .hero, .panel, .clock-card, .overlap-card { padding: 24px; }
-    .hero { display: grid; gap: 16px; margin-bottom: 22px; }
-    .eyebrow { margin: 0; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.84rem; }
-    h1, h2, h3, p { margin: 0; }
-    h1 { font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: -0.05em; }
-    .lead, .muted { color: var(--muted); line-height: 1.7; }
-    .layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 20px; }
-    .panel { display: grid; gap: 16px; align-content: start; }
-    label { display: grid; gap: 8px; color: var(--muted); }
-    input, select {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(5, 11, 18, 0.8);
-      color: var(--text);
-      font: inherit;
-    }
-    .clock-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
-    .clock-card { display: grid; gap: 10px; }
-    .clock-card strong { font-size: 1.8rem; letter-spacing: -0.05em; }
-    .clock-card[data-good="true"] { border-color: rgba(88, 211, 179, 0.34); }
-    .overlap-list { display: grid; gap: 12px; }
-    .overlap-item {
-      padding: 14px 16px;
-      border-radius: 20px;
-      border: 1px solid rgba(146, 199, 227, 0.1);
-      background: rgba(255, 255, 255, 0.03);
-    }
-    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
-  </style>
+  <title>Time Zone Overlap Planner | Signal Studio</title>
+  <meta
+    name="description"
+    content="複数地域の就業時間帯から、重なりやすいミーティング候補を探せる静的タイムゾーン調整ツールです。"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./assets/site.css" />
+  <script src="./assets/analytics.js"></script>
 </head>
 <body>
   <main>
-    <div class="topbar">
-      <a class="pill" href="./index.html">GitHub Pages Playground</a>
-      <div class="topbar-nav">
-        <a class="pill" href="./static-showcase.html">Launch Console</a>
-        <a class="pill" href="./launch-planner.html">Launch Planner</a>
-        <a class="pill" href="./handoff-studio.html">Handoff Studio</a>
-      </div>
-    </div>
+    <header class="topbar">
+      <a class="brand" href="./index.html">Signal Studio</a>
+      <nav class="topbar-nav">
+        <a class="nav-link" href="./meeting-cost.html">Meeting Cost</a>
+        <a class="nav-link" href="./launch-planner.html">Launch Checklist</a>
+        <a class="nav-link" href="./utm-builder.html">UTM Builder</a>
+      </nav>
+    </header>
 
     <section class="hero">
-      <p class="eyebrow">Practical Scheduling</p>
-      <h1>Time Zone Planner</h1>
+      <p class="eyebrow">Remote Ops</p>
+      <h1>Time Zone Overlap Planner</h1>
       <p class="lead">
-        Compare launch times across major hubs, find acceptable overlap windows, and keep the schedule grounded in the
-        same locally stored plan as the rest of the suite.
+        参加地域と就業時間帯から、重なりやすい時間帯を出します。
+        比較行動が自然に発生しやすく、GA4でも地域組み合わせの分析題材になります。
       </p>
     </section>
 
-    <section class="layout">
+    <section class="tool-layout">
       <aside class="panel">
-        <h2>Launch Window</h2>
-        <label>
-          <span>Date</span>
-          <input id="launch-date" type="date" />
-        </label>
-        <label>
-          <span>UTC start</span>
-          <input id="launch-time" type="time" />
-        </label>
-        <label>
-          <span>Session length</span>
-          <select id="duration-select">
-            <option value="30">30 minutes</option>
-            <option value="60">60 minutes</option>
-            <option value="90">90 minutes</option>
-            <option value="120">120 minutes</option>
-          </select>
-        </label>
-        <p class="muted" id="launch-summary">Using the shared launch plan from local storage.</p>
+        <div class="section-heading">
+          <h2>Inputs</h2>
+        </div>
+        <div class="input-grid">
+          <label class="input-stack">
+            <span>日付</span>
+            <input id="meeting-date" type="date" />
+          </label>
+          <label class="input-stack">
+            <span>会議時間</span>
+            <select id="duration">
+              <option value="30">30 min</option>
+              <option value="45">45 min</option>
+              <option value="60" selected>60 min</option>
+              <option value="90">90 min</option>
+            </select>
+          </label>
+          <label class="input-stack">
+            <span>就業開始</span>
+            <input id="work-start" type="time" value="09:00" />
+          </label>
+          <label class="input-stack">
+            <span>就業終了</span>
+            <input id="work-end" type="time" value="18:00" />
+          </label>
+        </div>
+        <div class="label-stack">
+          <span>参加地域</span>
+          <div class="chip-row" id="city-chips">
+            <button class="chip is-active" type="button" data-city="San Francisco" data-zone="America/Los_Angeles" aria-pressed="true">San Francisco</button>
+            <button class="chip is-active" type="button" data-city="New York" data-zone="America/New_York" aria-pressed="true">New York</button>
+            <button class="chip" type="button" data-city="London" data-zone="Europe/London" aria-pressed="false">London</button>
+            <button class="chip is-active" type="button" data-city="Tokyo" data-zone="Asia/Tokyo" aria-pressed="true">Tokyo</button>
+            <button class="chip" type="button" data-city="Singapore" data-zone="Asia/Singapore" aria-pressed="false">Singapore</button>
+            <button class="chip" type="button" data-city="Sydney" data-zone="Australia/Sydney" aria-pressed="false">Sydney</button>
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="pill-button" id="generate-button" type="button">候補を出す</button>
+          <button class="secondary-button" id="copy-button" type="button">候補をコピー</button>
+        </div>
       </aside>
 
-      <section style="display:grid; gap:20px;">
-        <article class="panel">
-          <div class="toolbar">
-            <h2>Regional Clocks</h2>
-            <span class="muted" id="local-now">--</span>
+      <section class="section-stack">
+        <article class="result-card">
+          <div class="section-heading">
+            <h2>Best Overlap Windows</h2>
+            <p class="muted" id="planner-summary">参加地域の重なりを上から表示します。</p>
           </div>
-          <div class="clock-grid" id="clock-grid"></div>
-        </article>
-
-        <article class="overlap-card">
-          <h2>Best overlap windows</h2>
-          <p class="muted" style="margin-top:8px;">A simple static heuristic favors 09:00 to 18:00 local time across as many cities as possible.</p>
-          <div class="overlap-list" id="overlap-list" style="margin-top:18px;"></div>
+          <div class="section-stack" id="overlap-results"></div>
         </article>
       </section>
     </section>
   </main>
 
   <script>
-    const STORAGE_KEY = "github-pages-playground.launch-suite";
-    const cities = [
-      ["San Francisco", "America/Los_Angeles"],
-      ["New York", "America/New_York"],
-      ["London", "Europe/London"],
-      ["Berlin", "Europe/Berlin"],
-      ["Singapore", "Asia/Singapore"],
-      ["Tokyo", "Asia/Tokyo"]
-    ];
-    const defaults = { date: "2026-06-18", time: "15:00", duration: "60", timezone: "UTC", name: "Atlas 2.0" };
-    let state = loadState();
+    SiteAnalytics.initPage({
+      pageType: "tool",
+      contentGroup: "remote_ops",
+      toolName: "timezone_planner"
+    });
 
-    const dateEl = document.getElementById("launch-date");
-    const timeEl = document.getElementById("launch-time");
-    const durationEl = document.getElementById("duration-select");
-    const clockGrid = document.getElementById("clock-grid");
-    const overlapList = document.getElementById("overlap-list");
-    const summaryEl = document.getElementById("launch-summary");
-    const localNowEl = document.getElementById("local-now");
+    const dateEl = document.getElementById("meeting-date");
+    const durationEl = document.getElementById("duration");
+    const workStartEl = document.getElementById("work-start");
+    const workEndEl = document.getElementById("work-end");
+    const chips = Array.from(document.querySelectorAll("#city-chips .chip"));
+    const resultsEl = document.getElementById("overlap-results");
+    const summaryEl = document.getElementById("planner-summary");
 
-    function loadState() {
-      try {
-        return { ...defaults, ...(JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}")) };
-      } catch (error) {
-        console.warn("Failed to restore launch state", error);
-        return { ...defaults };
-      }
+    const today = new Date();
+    dateEl.value = new Date(today.getTime() + 86400000).toISOString().slice(0, 10);
+
+    function selectedCities() {
+      return chips
+        .filter((chip) => chip.classList.contains("is-active"))
+        .map((chip) => ({ city: chip.dataset.city, zone: chip.dataset.zone }));
     }
 
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, date: dateEl.value, time: timeEl.value, duration: durationEl.value }));
+    function minutesFromTime(value) {
+      const [hour, minute] = value.split(":").map(Number);
+      return hour * 60 + minute;
     }
 
-    function getUtcDate(baseDate, time, timeZone) {
-      const [year, month, day] = baseDate.split("-").map(Number);
-      const [hour, minute] = time.split(":").map(Number);
-      const utcGuess = new Date(Date.UTC(year, month - 1, day, hour, minute));
-      const parts = Object.fromEntries(
-        new Intl.DateTimeFormat("en-US", {
-          timeZone,
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false
-        }).formatToParts(utcGuess).filter((part) => part.type !== "literal").map((part) => [part.type, part.value])
-      );
-      const asIfUtc = Date.UTC(
-        Number(parts.year),
-        Number(parts.month) - 1,
-        Number(parts.day),
-        Number(parts.hour),
-        Number(parts.minute)
-      );
-      const desired = Date.UTC(year, month - 1, day, hour, minute);
-      return new Date(utcGuess.getTime() + (desired - asIfUtc));
-    }
-
-    function formatTime(date, timeZone, options = {}) {
+    function formatLocal(date, zone) {
       return new Intl.DateTimeFormat("en-US", {
+        timeZone: zone,
         hour: "2-digit",
         minute: "2-digit",
-        hour12: false,
-        timeZone,
-        ...options
+        hour12: false
       }).format(date);
     }
 
-    function getHourInZone(date, timeZone) {
-      return Number(new Intl.DateTimeFormat("en-US", {
+    function localMinutes(date, zone) {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: zone,
         hour: "2-digit",
-        hour12: false,
-        timeZone
-      }).format(date));
+        minute: "2-digit",
+        hour12: false
+      }).formatToParts(date);
+      const hour = Number(parts.find((part) => part.type === "hour").value);
+      const minute = Number(parts.find((part) => part.type === "minute").value);
+      return (hour * 60) + minute;
     }
 
-    function renderClocks() {
-      const date = getUtcDate(dateEl.value, timeEl.value, state.timezone || "UTC");
-      const now = new Date();
-      clockGrid.innerHTML = "";
-      localNowEl.textContent = `Local now ${now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZoneName: "short" })}`;
-      summaryEl.textContent = `${state.name || "Launch"} starts at ${dateEl.value} ${timeEl.value} ${state.timezone || "UTC"} and runs for ${durationEl.value} minutes.`;
+    function buildCandidates() {
+      const cities = selectedCities();
+      const workStart = minutesFromTime(workStartEl.value);
+      const workEnd = minutesFromTime(workEndEl.value);
+      const duration = Number(durationEl.value);
+      const baseDate = new Date(dateEl.value + "T00:00:00Z");
+      const candidates = [];
 
-      cities.forEach(([label, zone]) => {
-        const localHour = getHourInZone(date, zone);
-        const good = localHour >= 9 && localHour <= 18;
-        const article = document.createElement("article");
-        article.className = "clock-card";
-        article.dataset.good = String(good);
-        article.innerHTML = `
-          <span class="muted">${label}</span>
-          <strong>${formatTime(date, zone)}</strong>
-          <span class="muted">${good ? "Good collaboration window" : "Outside common work hours"}</span>
-        `;
-        clockGrid.append(article);
-      });
-    }
+      for (let minute = 0; minute < 24 * 60; minute += 30) {
+        const startDate = new Date(baseDate.getTime() + (minute * 60000));
+        const endDate = new Date(startDate.getTime() + (duration * 60000));
+        let score = 0;
+        const lines = [];
 
-    function renderOverlap() {
-      overlapList.innerHTML = "";
-      const baseDate = dateEl.value;
+        cities.forEach((city) => {
+          const startMinute = localMinutes(startDate, city.zone);
+          const endMinute = localMinutes(endDate, city.zone);
+          const withinWindow = startMinute >= workStart && endMinute <= workEnd;
+          if (withinWindow) score += 1;
+          lines.push(city.city + ": " + formatLocal(startDate, city.zone) + " - " + formatLocal(endDate, city.zone) + (withinWindow ? " good" : " outside"));
+        });
 
-      const windows = Array.from({ length: 8 }, (_, index) => {
-        const hour = 10 + (index * 2);
-        const candidate = getUtcDate(baseDate, `${String(hour).padStart(2, "0")}:00`, "UTC");
-        const score = cities.reduce((sum, [, zone]) => {
-          const localHour = getHourInZone(candidate, zone);
-          return sum + (localHour >= 9 && localHour <= 18 ? 1 : 0);
-        }, 0);
-        return { hour, score, candidate };
-      }).sort((a, b) => b.score - a.score).slice(0, 3);
-
-      windows.forEach((window, index) => {
-        const item = document.createElement("div");
-        item.className = "overlap-item";
-        item.innerHTML = `
-          <strong>${index + 1}. ${String(window.hour).padStart(2, "0")}:00 UTC</strong>
-          <p class="muted">Comfortable for ${window.score} of ${cities.length} regions. Suggested for the ${state.name || "launch"} decision window.</p>
-        `;
-        overlapList.append(item);
-      });
-    }
-
-    function render() {
-      renderClocks();
-      renderOverlap();
-      saveState();
-    }
-
-    dateEl.value = state.date;
-    timeEl.value = state.time;
-    durationEl.value = state.duration || "60";
-    [dateEl, timeEl, durationEl].forEach((el) => el.addEventListener("input", render));
-    window.addEventListener("storage", (event) => {
-      if (event.key === STORAGE_KEY) {
-        state = loadState();
-        dateEl.value = state.date;
-        timeEl.value = state.time;
-        durationEl.value = state.duration || "60";
-        render();
+        if (score > 0) {
+          candidates.push({ startDate, score, lines });
+        }
       }
+
+      return candidates
+        .sort((a, b) => b.score - a.score || a.startDate - b.startDate)
+        .slice(0, 5);
+    }
+
+    function renderCandidates() {
+      const cities = selectedCities();
+      const candidates = buildCandidates();
+      summaryEl.textContent = cities.length + "地域を対象に、重なりスコアの高い候補を表示しています。";
+
+      if (!candidates.length) {
+        resultsEl.innerHTML = '<article class="checklist-card"><h3>候補なし</h3><p class="summary-text">就業時間帯を少し広げるか、参加地域を減らしてください。</p></article>';
+        return candidates;
+      }
+
+      resultsEl.innerHTML = candidates.map((candidate, index) => {
+        const title = "Candidate " + (index + 1) + " / score " + candidate.score + " of " + cities.length;
+        const lines = candidate.lines.map((line) => "<li>" + line + "</li>").join("");
+        return '<article class="checklist-card"><h3>' + title + '</h3><ul>' + lines + "</ul></article>";
+      }).join("");
+
+      return candidates;
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chip.classList.toggle("is-active");
+        chip.setAttribute("aria-pressed", String(chip.classList.contains("is-active")));
+        SiteAnalytics.trackOnce("timezone_started", "tool_interaction_started", {
+          tool_stage: "input_started"
+        });
+      });
     });
-    render();
+
+    [dateEl, durationEl, workStartEl, workEndEl].forEach((element) => {
+      element.addEventListener("change", () => {
+        SiteAnalytics.trackOnce("timezone_started", "tool_interaction_started", {
+          tool_stage: "input_started"
+        });
+      });
+    });
+
+    document.getElementById("generate-button").addEventListener("click", () => {
+      const cities = selectedCities();
+      const candidates = renderCandidates();
+      SiteAnalytics.track("timezone_plan_created", {
+        city_count: cities.length,
+        duration_min: Number(durationEl.value),
+        best_score: candidates[0] ? candidates[0].score : 0
+      });
+    });
+
+    document.getElementById("copy-button").addEventListener("click", async () => {
+      const cities = selectedCities();
+      const candidates = renderCandidates();
+      const text = candidates.map((candidate, index) => {
+        return [
+          "Candidate " + (index + 1),
+          ...candidate.lines
+        ].join("\n");
+      }).join("\n\n");
+
+      await SiteAnalytics.copyText(text || "No candidates", {
+        copied_asset: "timezone_candidates",
+        city_count: cities.length
+      });
+    });
+
+    renderCandidates();
   </script>
 </body>
 </html>
