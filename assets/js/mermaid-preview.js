@@ -4,10 +4,26 @@ mermaid.initialize({ startOnLoad: false });
 
 const definition = document.getElementById("definition");
 const preview = document.getElementById("preview");
+let renderRequestId = 0;
 
 async function render() {
-  const { svg } = await mermaid.render(`mermaid-${crypto.randomUUID()}`, definition.value);
-  preview.innerHTML = svg;
+  const requestId = ++renderRequestId;
+
+  try {
+    const { svg } = await mermaid.render(`mermaid-${crypto.randomUUID()}`, definition.value);
+
+    if (requestId !== renderRequestId) {
+      return;
+    }
+
+    preview.innerHTML = svg;
+  } catch (error) {
+    if (requestId !== renderRequestId) {
+      return;
+    }
+
+    preview.textContent = error instanceof Error ? error.message : String(error);
+  }
 }
 
 definition.addEventListener("input", () => {
