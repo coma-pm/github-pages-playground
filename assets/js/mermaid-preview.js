@@ -34,5 +34,3 @@ async function render() {
 execute.addEventListener("click", () => {
   void render();
 });
-
-void render();
