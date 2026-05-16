@@ -3,6 +3,7 @@ import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.mi
 mermaid.initialize({ startOnLoad: false });
 
 const definition = document.getElementById("definition");
+const execute = document.getElementById("execute");
 const preview = document.getElementById("preview");
 let renderRequestId = 0;
 
@@ -26,7 +27,7 @@ async function render() {
   }
 }
 
-definition.addEventListener("input", () => {
+execute.addEventListener("click", () => {
   void render();
 });
 
