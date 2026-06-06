@@ -355,9 +355,8 @@ function optimizeAxis() {
 
 function randomizeData() {
   cancelOptimization();
-  // New data gets a new initial axis so users can rediscover the maximum direction.
+  // Keep the current axis angle while replacing the data cloud.
   state.points = generateCorrelatedGaussianPoints();
-  state.angleDeg = Math.random() * 180;
   state.plotScale = computePlotScale(
     canvas.getBoundingClientRect().width,
     canvas.getBoundingClientRect().height
