@@ -1,5 +1,4 @@
 :root {
-  --bg: #f5f1e8;
   --ink: #111111;
   --line: #b8b1a5;
 }
@@ -9,20 +8,7 @@
 }
 
 body {
-  background: var(--bg);
   color: var(--ink);
-}
-
-.app-shell {
-  max-width: 1000px;
-}
-
-.title-block p:first-child {
-  margin-top: 0;
-}
-
-.title-block p:not(:first-child) {
-  max-width: 48em;
 }
 
 .controls {
@@ -58,7 +44,7 @@ input[type="range"] {
   width: 100%;
   min-height: 520px;
   border: 1px solid var(--line);
-  background: #fffaf0;
+  background: #ffffff;
 }
 
 #plotCanvas {

@@ -9,30 +9,24 @@
   <script src="../assets/js/google-tag.js"></script>
 </head>
 <body>
-  <main class="app-shell">
-    <header class="top-bar" aria-label="PCA controls">
-      <div class="title-block">
-        <p><a href="../index.html">index</a></p>
-        <h1>PCA Projection Demo</h1>
-        <p>Project 2D data onto a 1D axis and observe which direction maximizes the projected variance.</p>
-      </div>
+  <p><a href="../index.html">index</a></p>
+  <h1>PCA Projection Demo</h1>
+  <p>Project 2D data onto a 1D axis and observe which direction maximizes the projected variance.</p>
 
-      <section class="controls" aria-label="Controls">
-        <button id="randomizeButton" type="button">RANDOMIZE</button>
-        <button id="optimizeButton" type="button">OPTIMIZE</button>
-        <label class="angle-control">
-          <span>ANGLE <strong id="angleReadout">0°</strong></span>
-          <input id="angleSlider" type="range" min="0" max="180" step="0.1" value="24">
-        </label>
-      </section>
-    </header>
+  <p class="controls">
+    <button id="randomizeButton" type="button">Randomize</button>
+    <button id="optimizeButton" type="button">Optimize</button>
+    <label class="angle-control">
+      <span>Angle <strong id="angleReadout">0°</strong></span>
+      <input id="angleSlider" type="range" min="0" max="180" step="0.1" value="24">
+    </label>
+  </p>
 
-    <section class="visualization" aria-label="Interactive PCA visualization">
-      <canvas id="plotCanvas" aria-label="Scatter plot with projection axis"></canvas>
-      <div id="varianceReadout" class="variance-readout" aria-live="polite">VAR: 0.00</div>
-    </section>
-  </main>
+  <div class="visualization" aria-label="Interactive PCA visualization">
+    <canvas id="plotCanvas" aria-label="Scatter plot with projection axis"></canvas>
+    <div id="varianceReadout" class="variance-readout" aria-live="polite">VAR: 0.00</div>
+  </div>
 
-  <script src="../assets/js/pca-projection.js"></script>
+  <script type="module" src="../assets/js/pca-projection.js"></script>
 </body>
 </html>
