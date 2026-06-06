@@ -11,6 +11,9 @@ const varianceReadout = document.getElementById("varianceReadout");
 const state = {
   points: [],
   normal: normalFromAngles(Number(yawSlider.value), Number(pitchSlider.value)),
+  cameraYawDeg: 318,
+  cameraPitchDeg: 28,
+  drag: null,
   animationId: null,
   devicePixelRatio: 1,
   plotScale: 1,
@@ -20,10 +23,7 @@ const POINT_COUNT = 42;
 const WORLD_PADDING = 1.55;
 const PLANE_HALF_SIZE = 4.2;
 const OPTIMIZE_DURATION_MS = 1200;
-const CAMERA = {
-  x: normalize3({ x: 0.82, y: 0, z: -0.58 }),
-  y: normalize3({ x: -0.28, y: 0.88, z: -0.39 }),
-};
+const VIEW_ROTATION_DEG_PER_PIXEL = 0.35;
 
 function degToRad(deg) {
   return (deg * Math.PI) / 180;
@@ -39,6 +39,10 @@ function normalizeDegrees(deg) {
 
 function clampPitch(deg) {
   return Math.min(89, Math.max(-89, deg));
+}
+
+function clampCameraPitch(deg) {
+  return Math.min(82, Math.max(-82, deg));
 }
 
 function gaussianRandom() {
@@ -325,10 +329,20 @@ function computePlotScale(width, height) {
   return (Math.min(width, height) / 2) * (1 / (maxAbs * WORLD_PADDING));
 }
 
+function cameraBasis() {
+  const forward = normalFromAngles(state.cameraYawDeg, state.cameraPitchDeg);
+  const fallback = Math.abs(forward.y) > 0.96 ? { x: 1, y: 0, z: 0 } : { x: 0, y: 1, z: 0 };
+  const right = normalize3(cross3(fallback, forward));
+  const up = normalize3(cross3(forward, right));
+  return { right, up, forward };
+}
+
 function toCamera(point) {
+  const { right, up, forward } = cameraBasis();
   return {
-    x: dot3(point, CAMERA.x),
-    y: dot3(point, CAMERA.y),
+    x: dot3(point, right),
+    y: dot3(point, up),
+    z: dot3(point, forward),
   };
 }
 
@@ -393,15 +407,17 @@ function draw() {
   const marks = state.points
     .flatMap((point) => {
       const projected = projectToPlane(point, state.normal);
+      const pointDepth = toCamera(point).z;
+      const projectedDepth = toCamera(projected).z;
       return [
         {
-          depth: dot3(projected, state.normal),
+          depth: (pointDepth + projectedDepth) / 2,
           type: "segment",
           from: point,
           to: projected,
         },
-        { depth: dot3(projected, state.normal) - 0.01, type: "projected", point: projected },
-        { depth: dot3(point, state.normal) + 0.01, type: "point", point },
+        { depth: projectedDepth - 0.01, type: "projected", point: projected },
+        { depth: pointDepth + 0.01, type: "point", point },
       ];
     })
     .sort((a, b) => a.depth - b.depth);
@@ -530,6 +546,24 @@ function randomizeData() {
   draw();
 }
 
+function updateCameraFromDrag(clientX, clientY) {
+  if (!state.drag) return;
+
+  const deltaX = clientX - state.drag.x;
+  const deltaY = clientY - state.drag.y;
+  state.cameraYawDeg = normalizeDegrees(
+    state.drag.cameraYawDeg + deltaX * VIEW_ROTATION_DEG_PER_PIXEL
+  );
+  state.cameraPitchDeg = clampCameraPitch(
+    state.drag.cameraPitchDeg - deltaY * VIEW_ROTATION_DEG_PER_PIXEL
+  );
+  state.plotScale = computePlotScale(
+    canvas.getBoundingClientRect().width,
+    canvas.getBoundingClientRect().height
+  );
+  draw();
+}
+
 yawSlider.addEventListener("input", () => {
   cancelOptimization();
   setPlaneFromSliders();
@@ -540,6 +574,24 @@ pitchSlider.addEventListener("input", () => {
 });
 randomizeButton.addEventListener("click", randomizeData);
 optimizeButton.addEventListener("click", optimizePlane);
+canvas.addEventListener("pointerdown", (event) => {
+  state.drag = {
+    x: event.clientX,
+    y: event.clientY,
+    cameraYawDeg: state.cameraYawDeg,
+    cameraPitchDeg: state.cameraPitchDeg,
+  };
+  canvas.setPointerCapture(event.pointerId);
+});
+canvas.addEventListener("pointermove", (event) => {
+  updateCameraFromDrag(event.clientX, event.clientY);
+});
+canvas.addEventListener("pointerup", () => {
+  state.drag = null;
+});
+canvas.addEventListener("pointercancel", () => {
+  state.drag = null;
+});
 window.addEventListener("resize", resizeCanvas);
 
 state.points = generateCorrelatedGaussianPoints();

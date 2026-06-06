@@ -64,6 +64,15 @@ input[type="range"] {
   min-height: 520px;
 }
 
+.orbit-canvas {
+  cursor: grab;
+  touch-action: none;
+}
+
+.orbit-canvas:active {
+  cursor: grabbing;
+}
+
 .variance-readout {
   position: absolute;
   top: 1rem;
