@@ -22,6 +22,7 @@ const state = {
 const POINT_COUNT = 42;
 const WORLD_PADDING = 1.55;
 const PLANE_HALF_SIZE = 4.2;
+const AXIS_LENGTH = 3.6;
 const OPTIMIZE_DURATION_MS = 1200;
 const VIEW_ROTATION_DEG_PER_PIXEL = 0.35;
 
@@ -389,6 +390,52 @@ function drawPolygon(points, fillStyle, strokeStyle) {
   ctx.stroke();
 }
 
+function drawText(text, point, fillStyle) {
+  ctx.fillStyle = fillStyle;
+  ctx.font = "bold 15px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, point.x, point.y);
+}
+
+function drawArrow(from, to, strokeStyle) {
+  drawLine(from, to, strokeStyle, 2.5);
+
+  const angle = Math.atan2(to.y - from.y, to.x - from.x);
+  const arrowSize = 9;
+  ctx.beginPath();
+  ctx.moveTo(to.x, to.y);
+  ctx.lineTo(
+    to.x - Math.cos(angle - Math.PI / 6) * arrowSize,
+    to.y - Math.sin(angle - Math.PI / 6) * arrowSize
+  );
+  ctx.lineTo(
+    to.x - Math.cos(angle + Math.PI / 6) * arrowSize,
+    to.y - Math.sin(angle + Math.PI / 6) * arrowSize
+  );
+  ctx.closePath();
+  ctx.fillStyle = strokeStyle;
+  ctx.fill();
+}
+
+function drawAxes() {
+  const axes = [
+    { label: "X", color: "#b42318", vector: { x: AXIS_LENGTH, y: 0, z: 0 } },
+    { label: "Y", color: "#147d3f", vector: { x: 0, y: AXIS_LENGTH, z: 0 } },
+    { label: "Z", color: "#1d4ed8", vector: { x: 0, y: 0, z: AXIS_LENGTH } },
+  ];
+  const origin = { x: 0, y: 0, z: 0 };
+  const originScreen = worldToScreen(origin);
+
+  axes.forEach((axis) => {
+    const endScreen = worldToScreen(axis.vector);
+    drawArrow(originScreen, endScreen, axis.color);
+    drawText(axis.label, worldToScreen(scale3(axis.vector, 1.1)), axis.color);
+  });
+
+  drawCircle(originScreen, 4, "#ffffff", "#111111", 1.5);
+}
+
 function draw() {
   const rect = canvas.getBoundingClientRect();
   ctx.clearRect(0, 0, rect.width, rect.height);
@@ -436,6 +483,7 @@ function draw() {
     drawCircle(worldToScreen(mark.point), 5.8, "#111111");
   });
 
+  drawAxes();
   updateReadouts();
 }
 
