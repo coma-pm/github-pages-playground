@@ -4,6 +4,7 @@ mermaid.initialize({ startOnLoad: false });
 
 const definition = document.getElementById("definition");
 const execute = document.getElementById("execute");
+const clear = document.getElementById("clear");
 const preview = document.getElementById("preview");
 let renderRequestId = 0;
 
@@ -33,4 +34,11 @@ async function render() {
 
 execute.addEventListener("click", () => {
   void render();
+});
+
+clear.addEventListener("click", () => {
+  renderRequestId += 1;
+  definition.value = "";
+  preview.innerHTML = "";
+  preview.textContent = "";
 });
