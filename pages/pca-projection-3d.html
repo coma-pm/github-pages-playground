@@ -5,33 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PCA 3D to 2D Projection Demo</title>
 
+  <link rel="stylesheet" href="../assets/css/site.css">
   <link rel="stylesheet" href="../assets/css/pca-projection.css">
   <script src="../assets/js/google-tag.js"></script>
 </head>
 <body>
-  <p><a href="../index.html">index</a></p>
-  <h1>PCA 3D to 2D Projection Demo</h1>
-  <p>Compress 3D data onto a 2D plane and observe which plane preserves the most variance.</p>
+  <main class="shell">
+    <a class="back-link" href="../index.html">Back to index</a>
+    <header class="page-header">
+      <h1>PCA 3D to 2D Projection Demo</h1>
+      <p>Compress 3D data onto a 2D plane and observe which plane preserves the most variance.</p>
+    </header>
 
-  <p class="controls controls-stacked">
-    <span class="button-row">
-      <button id="randomizeButton" type="button">Randomize</button>
-      <button id="optimizeButton" type="button">Optimize</button>
-    </span>
-    <label class="angle-control">
-      <span>Plane yaw <strong id="yawReadout">0°</strong></span>
-      <input id="yawSlider" type="range" min="0" max="360" step="0.1" value="38">
-    </label>
-    <label class="angle-control">
-      <span>Plane pitch <strong id="pitchReadout">0°</strong></span>
-      <input id="pitchSlider" type="range" min="-89" max="89" step="0.1" value="-24">
-    </label>
-  </p>
+    <p class="controls controls-stacked">
+      <span class="button-row">
+        <button id="randomizeButton" type="button">Randomize</button>
+        <button id="optimizeButton" type="button">Optimize</button>
+      </span>
+      <label class="angle-control">
+        <span>Plane yaw <strong id="yawReadout">0°</strong></span>
+        <input id="yawSlider" type="range" min="0" max="360" step="0.1" value="38">
+      </label>
+      <label class="angle-control">
+        <span>Plane pitch <strong id="pitchReadout">0°</strong></span>
+        <input id="pitchSlider" type="range" min="-89" max="89" step="0.1" value="-24">
+      </label>
+    </p>
 
-  <div class="visualization" aria-label="Interactive PCA 3D to 2D visualization">
-    <canvas id="plotCanvas" class="orbit-canvas" aria-label="3D scatter plot with projection plane"></canvas>
-    <div id="varianceReadout" class="variance-readout" aria-live="polite">VAR: 0.00</div>
-  </div>
+    <div class="visualization" aria-label="Interactive PCA 3D to 2D visualization">
+      <canvas id="plotCanvas" class="orbit-canvas" aria-label="3D scatter plot with projection plane"></canvas>
+      <div id="varianceReadout" class="variance-readout" aria-live="polite">VAR: 0.00</div>
+    </div>
+  </main>
 
   <script type="module" src="../assets/js/pca-projection-3d.js"></script>
 </body>

@@ -1,22 +1,31 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mermaid Preview</title>
 
+  <link rel="stylesheet" href="../assets/css/site.css">
   <script src="../assets/js/google-tag.js"></script>
 </head>
 <body>
-  <p><a href="../index.html">index</a></p>
-  <textarea id="definition">flowchart TD
+  <main class="shell">
+    <a class="back-link" href="../index.html">Back to index</a>
+    <header class="page-header">
+      <h1>Mermaid Preview</h1>
+      <p>Render Mermaid diagrams from text and inspect the output in the browser.</p>
+    </header>
+
+    <textarea id="definition" aria-label="Mermaid definition">flowchart TD
   A[Start] --> B[Preview]
   B --> C[Done]</textarea>
-  <p>
-    <button id="execute" type="button">Render</button>
-    <button id="clear" type="button">Clear</button>
-  </p>
-  <div id="preview"></div>
+    <p class="actions">
+      <button id="execute" type="button">Render</button>
+      <button id="clear" type="button">Clear</button>
+    </p>
+    <div id="preview" class="preview"></div>
+  </main>
+
   <script type="module" src="../assets/js/mermaid-preview.js"></script>
 </body>
 </html>

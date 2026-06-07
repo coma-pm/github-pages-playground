@@ -5,28 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Date Distance</title>
 
+  <link rel="stylesheet" href="../assets/css/site.css">
   <script src="../assets/js/google-tag.js"></script>
 </head>
 <body>
-  <p><a href="../index.html">index</a></p>
-  <p>Calculate the number of days between a start date and an end date, inclusive of both dates.</p>
+  <main class="shell">
+    <a class="back-link" href="../index.html">Back to index</a>
+    <header class="page-header">
+      <h1>Date Distance</h1>
+      <p>Calculate the number of days between a start date and an end date, inclusive of both dates.</p>
+    </header>
 
-  <p>
-    <label for="start-date">Start date</label>
-    <input id="start-date" type="date">
-  </p>
+    <div class="field-grid">
+      <p class="field">
+        <label for="start-date">Start date</label>
+        <input id="start-date" type="date">
+      </p>
 
-  <p>
-    <label for="end-date">End date</label>
-    <input id="end-date" type="date">
-  </p>
+      <p class="field">
+        <label for="end-date">End date</label>
+        <input id="end-date" type="date">
+      </p>
 
-  <p>
-    <label for="day-count">Days</label>
-    <input id="day-count" type="number" inputmode="numeric" step="1">
-  </p>
+      <p class="field">
+        <label for="day-count">Days</label>
+        <input id="day-count" type="number" inputmode="numeric" step="1">
+      </p>
+    </div>
 
-  <p id="summary"></p>
+    <p id="summary" class="summary"></p>
+  </main>
 
   <script type="module" src="../assets/js/date-distance.js"></script>
 </body>
