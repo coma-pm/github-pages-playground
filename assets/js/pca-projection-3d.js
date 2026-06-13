@@ -439,7 +439,6 @@ function drawAxes() {
 function draw() {
   const rect = canvas.getBoundingClientRect();
   ctx.clearRect(0, 0, rect.width, rect.height);
-  drawGrid(rect.width, rect.height);
 
   const { u, v } = planeBasis(state.normal);
   const planeCorners = [
@@ -485,37 +484,6 @@ function draw() {
 
   drawAxes();
   updateReadouts();
-}
-
-function drawGrid(width, height) {
-  const center = { x: width / 2, y: height / 2 };
-  const gridStep = Math.max(42, state.plotScale);
-
-  ctx.save();
-  ctx.strokeStyle = "rgba(17, 17, 17, 0.08)";
-  ctx.lineWidth = 1;
-
-  for (let x = center.x % gridStep; x < width; x += gridStep) {
-    drawLine({ x, y: 0 }, { x, y: height }, ctx.strokeStyle, 1);
-  }
-
-  for (let y = center.y % gridStep; y < height; y += gridStep) {
-    drawLine({ x: 0, y }, { x: width, y }, ctx.strokeStyle, 1);
-  }
-
-  drawLine(
-    { x: 0, y: center.y },
-    { x: width, y: center.y },
-    "rgba(17, 17, 17, 0.16)",
-    1.5
-  );
-  drawLine(
-    { x: center.x, y: 0 },
-    { x: center.x, y: height },
-    "rgba(17, 17, 17, 0.16)",
-    1.5
-  );
-  ctx.restore();
 }
 
 function setPlaneFromSliders() {
